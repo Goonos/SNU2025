@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>학점 계산기</title>
+  <style>
+    body {
+      font-family: "Noto Sans KR", sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f9fc;
+      color: #333;
+    }
+    header {
+      background-color: #004080;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    section {
+      padding: 2rem;
+    }
+    h2 {
+      color: #004080;
+    }
+    input, textarea {
+      margin: 0.5rem;
+    }
+    .result {
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>대학교 가이드 사이트</h1>
+    <nav>
+      <a href="index.html">홈</a>
+      <a href="grad.html">졸업학점 계산기</a>
+      <a href="rank.html">성적 계산기</a>
+    </nav>
+  </header>
+
+  <section>
+    <h2>학점 계산기</h2>
+    학점 입력 (예: A+ 3학점 → 4.5):<br/>
+    <textarea id="grades" rows="5" cols="40" placeholder="4.5\n4.0\n3.5..."></textarea><br/>
+    <button onclick="calcGPA()">계산</button>
+    <div class="result" id="gpaResult"></div>
+  </section>
+
+  <script>
+    function calcGPA() {
+      const lines = document.getElementById("grades").value.trim().split("\n");
+      const nums = lines.map(Number).filter(n => !isNaN(n));
+
+      if (nums.length === 0) {
+        document.getElementById("gpaResult").textContent = "유효한 학점을 입력해주세요.";
+        return;
+      }
+
+      const sum = nums.reduce((a, b) => a + b, 0);
+      const avg = sum / nums.length;
+      document.getElementById("gpaResult").textContent = `총 평균 학점: ${avg.toFixed(2)}`;
+    }
+  </script>
+</body>
+</html>
