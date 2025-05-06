@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>졸업학점 계산기</title>
+  <style>
+    body {
+      font-family: "Noto Sans KR", sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f9fc;
+      color: #333;
+    }
+    header {
+      background-color: #004080;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    section {
+      padding: 2rem;
+    }
+    h2 {
+      color: #004080;
+    }
+    input {
+      margin: 0.5rem;
+    }
+    .result {
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>대학교 가이드 사이트</h1>
+    <nav>
+      <a href="index.html">홈</a>
+      <a href="rank.html">성적 계산기</a>
+      <a href="gpa.html">학점 계산기</a>
+    </nav>
+  </header>
+
+  <section>
+    <h2>졸업학점 계산기</h2>
+    전공: <input type="number" id="major" />
+    교양: <input type="number" id="liberal" />
+    일반: <input type="number" id="general" />
+    <button onclick="calcGraduation()">계산</button>
+    <div class="result" id="gradResult"></div>
+  </section>
+
+  <script>
+    function calcGraduation() {
+      const major = parseInt(document.getElementById("major").value) || 0;
+      const liberal = parseInt(document.getElementById("liberal").value) || 0;
+      const general = parseInt(document.getElementById("general").value) || 0;
+      const total = major + liberal + general;
+      const required = 130;
+      const result = required - total;
+      document.getElementById("gradResult").textContent =
+        result > 0 ? `졸업까지 ${result}학점 남았습니다.` : "졸업 요건을 충족했습니다!";
+    }
+  </script>
+</body>
+</html>
