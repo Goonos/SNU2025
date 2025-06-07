@@ -30,25 +30,20 @@
     <div class="result" id="result"></div>
   </main>
   <script>
-    // 표준 정규분포 누적분포함수 근사값 계산 (정확한 백분위 구함)
-    // https://stackoverflow.com/a/52551955
     function normalCdf(x, mean, std) {
       return 0.5 * (1 + erf((x - mean) / (std * Math.sqrt(2))));
     }
     // 에러 함수(수치근사)
     function erf(x) {
-      // constants
       var a1 =  0.254829592;
       var a2 = -0.284496736;
       var a3 =  1.421413741;
       var a4 = -1.453152027;
       var a5 =  1.061405429;
       var p  =  0.3275911;
-      // Save the sign of x
       var sign = (x >= 0) ? 1 : -1;
       x = Math.abs(x);
 
-      // A&S formula 7.1.26
       var t = 1.0/(1.0 + p*x);
       var y = 1.0 - (((((a5*t + a4)*t) + a3)*t + a2)*t + a1)*t*Math.exp(-x*x);
 
@@ -61,7 +56,6 @@
       const score = Number(document.getElementById('score').value);
       const people = Number(document.getElementById('people').value);
 
-      // 내 점수가 상위 몇 퍼센트? (백분위)
       let percentile = 100 * (1 - normalCdf(score, mean, std));
       percentile = Math.max(0, Math.min(100, percentile));
       const rank = Math.round(people * percentile / 100) + 1;
