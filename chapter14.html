@@ -1,0 +1,48 @@
+노드 추가 및 삭제
+
+- 노드 구성 원칙  
+  • 모든 HTML 태그는 요소 노드  
+  • 태그 안 텍스트는 텍스트 노드  
+  • 태그 속성은 속성 노드  
+  • 주석은 주석 노드  
+
+- 텍스트 노드 추가 방법  
+  1) 텍스트 노드 생성  
+  2) 요소 노드 생성 (예: p)  
+  3) 텍스트 노드를 요소 노드에 연결  
+  4) 원하는 영역에 추가  
+
+- 요소 노드 만들기  
+  document.createElement(요소명)  
+  예) let newP = document.createElement("p")
+
+- 텍스트 노드 만들기  
+  document.createTextNode(텍스트)  
+  예) let textNode = document.createTextNode("Typescript")
+
+- 자식 노드 연결  
+  부모노드.appendChild(자식노드)  
+  예) newP.appendChild(textNode)  
+      document.body.appendChild(newP)
+
+- 속성 노드 만들기  
+  document.createAttribute(속성명)  
+  노드명.value = 속성값  
+  예) let srcNode = document.createAttribute("src")  
+      srcNode.value = "images/wall.jpg"
+
+- 속성 노드 연결  
+  요소노드.setAttributeNode(속성노드)  
+  예) newImg.setAttributeNode(srcNode)
+
+- 기존 노드 앞에 추가  
+  insertBefore(새노드, 기준노드)
+
+- 노드 삭제  
+  요소.remove()  
+  부모노드.removeChild(자식노드)
+
+- 이벤트 리스너 함수 내 this  
+  - function() 사용시 this는 이벤트 대상 노드  
+  - 화살표 함수 사용시 this는 window 객체  
+  - 이벤트 대상 노드 필요시 function() 사용 권장
