@@ -89,19 +89,19 @@
       background: #b3b3b3;
       cursor: default;
     }
-    /* 오른쪽 달력+메모 박스 */
+    /* 오른쪽 달력+메모 박스: 100px 더 오른쪽, 파란계열 색상으로 */
     .right-widget-box {
       position: absolute;
-      right: -260px;
+      right: -360px; /* -260px -> -360px */
       top: 40%;
       transform: translateY(-50%);
       width: 230px;
-      background: #fff7e6;
+      background: #e7f0fa;
       border-radius: 12px;
-      box-shadow: 0 2px 8px #ffd96644;
+      box-shadow: 0 2px 8px #7aa7d6a1;
       padding: 1.1rem 1rem 1.4rem 1rem;
       font-size: 1.07rem;
-      color: #b38916;
+      color: #104870;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -111,7 +111,7 @@
       width: 210px;
       background: #fff;
       border-radius: 8px;
-      box-shadow: 0 1px 4px #f7ce8c33;
+      box-shadow: 0 1px 4px #c6daf9cc;
       padding: 0.8rem 0.5rem 0.7rem 0.5rem;
       margin-bottom: 1.1rem;
     }
@@ -122,6 +122,7 @@
       margin-bottom: 0.4rem;
       font-weight: bold;
       font-size: 1.02rem;
+      color: #004080;
     }
     .calendar-table {
       width: 100%;
@@ -134,9 +135,14 @@
       width: 1.7em; height: 1.7em;
       border-radius: 4px;
     }
+    .calendar-table th {
+      color: #004080;
+      font-weight: bold;
+      background: #f0f6fc;
+    }
     .calendar-table td.today {
-      background: #ffd966;
-      color: #8a6500;
+      background: #004080;
+      color: #fff;
       font-weight: bold;
     }
     .memo-area {
@@ -148,20 +154,21 @@
     }
     .memo-area textarea {
       width: 100%;
-      min-height: 52px;
+      min-height: 120px;  /* 세로 길이 넉넉하게 */
       border-radius: 7px;
-      border: 1px solid #ffd966;
+      border: 1.5px solid #76a5d9;
       font-family: inherit;
       font-size: 0.99rem;
       padding: 0.5rem;
       box-sizing: border-box;
       resize: vertical;
-      background: #fff;
+      background: #f9fbfe;
       margin-bottom: 0.6rem;
+      color: #193e65;
     }
     .memo-area button {
       padding: 0.47rem 0.7rem;
-      background: #b38916;
+      background: #004080;
       color: #fff;
       border: none;
       border-radius: 7px;
@@ -230,7 +237,7 @@
         placeholder="예: https://www.snu.ac.kr">
       <button id="goSchoolBtn">입력한 주소로 바로가기</button>
     </div>
-    <!-- 오른쪽: 캘린더 + 메모 -->
+    <!-- 오른쪽: 캘린더 + 메모 (100px 더 오른쪽, 파란색톤) -->
     <div class="right-widget-box">
       <!-- 캘린더 -->
       <div class="calendar" id="calendar"></div>
