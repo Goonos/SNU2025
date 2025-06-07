@@ -46,7 +46,7 @@
     }
     .school-link-box {
       position: absolute;
-      left: -400px; 
+      left: -260px;
       top: 40%;
       transform: translateY(-50%);
       width: 230px;
@@ -88,23 +88,19 @@
       background: #b3b3b3;
       cursor: default;
     }
-    @media (max-width: 1050px) {
-      .school-link-box {
-        left: -5vw;
-        width: 94vw;
-        position: static;
-        margin-bottom: 1.5rem;
-        border-radius: 8px;
-        box-shadow: none;
-        padding: 1rem 0.8rem 1.1rem 0.8rem;
-      }
-    }
-    @media (max-width: 600px) {
-      main { padding: 1rem; }
-      .school-link-box input[type=text] {
-        width: 100%;
-      }
-    }
+@media (max-width: 700px) {
+  .school-link-box {
+    position: static;
+    left: auto;
+    top: auto;
+    transform: none;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    box-shadow: none;
+    padding: 1rem 0.8rem 1.1rem 0.8rem;
+  }
+}
     .feature-list {
       list-style: none;
       padding: 0;
