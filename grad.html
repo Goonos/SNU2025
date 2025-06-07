@@ -3,43 +3,170 @@
 <head>
   <meta charset="UTF-8" />
   <title>졸업학점 계산기</title>
-   <style>
+  <style>
     body { font-family: 'Noto Sans KR', sans-serif; background: #f7f9fc; margin: 0; }
     main { max-width: 400px; margin: 3rem auto; background: white; border-radius: 12px; box-shadow: 0 2px 8px #eee; padding: 2rem; }
+    h2 { text-align: center; }
+    .input-list { margin-bottom: 1.5rem; }
     label { display: block; margin: 1rem 0 0.4rem; }
-    input[type=number] { width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ccc; }
-    button { margin-top: 1.3rem; width: 100%; background: #004080; color: white; border: none; padding: 0.8rem; font-size: 1.05rem; border-radius: 8px; cursor: pointer;}
-    .result { margin-top: 1.2rem; font-size: 1.1rem; color: #004080; font-weight: bold; }
-    .input-list { margin-bottom: 1.5rem;}
+    input[type=number] {
+      width: 100%; padding: 0.5rem; border-radius: 6px;
+      border: 1px solid #ccc; font-size: 1.06rem;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 1.3rem;
+      width: 100%;
+      background: #004080;
+      color: white;
+      border: none;
+      padding: 0.8rem;
+      font-size: 1.05rem;
+      border-radius: 8px;
+      cursor: pointer;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .reset-btn {
+      margin-top: 1.3rem;
+      margin-bottom: 0.8rem;
+      width: 100%;
+      background: #b01b1b;
+      color: #fff;
+      border: none;
+      padding: 0.7rem;
+      font-size: 1.02rem;
+      border-radius: 8px;
+      cursor: pointer;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .result {
+      margin-top: 1.2rem;
+      font-size: 1.1rem;
+      color: #004080;
+      font-weight: bold;
+      text-align: center;
+      min-height: 1.5em;
+    }
+    .center { text-align: center; }
   </style>
 </head>
 <body>
   <main>
-   <button class="main-btn" onclick="location.href='https://goonos.github.io/SNU2025/index.html'">홈으로</button>
+    <button onclick="location.href='https://goonos.github.io/SNU2025/index.html'">홈으로</button>
     <h2>졸업학점 계산기</h2>
-    <form id="gradForm">
-      <label>전공 이수 학점</label>
-      <input type="number" id="major" required />
-      <label>교양 이수 학점</label>
-      <input type="number" id="liberal" required />
-      <label>일반 이수 학점</label>
-      <input type="number" id="general" required />
+    <form id="inputForm" class="input-list">
+      <label for="total-credit">총 필요 졸업학점</label>
+      <input type="number" id="total-credit" min="0" required>
+
+      <label for="major-req">전공 이수 학점</label>
+      <input type="number" id="major-req" min="0" required>
+
+      <label for="liberal-req">교양 이수 학점</label>
+      <input type="number" id="liberal-req" min="0" required>
+
+      <label for="general-req">일반 이수 학점</label>
+      <input type="number" id="general-req" min="0" required>
+    </form>
+    <form id="gradForm" class="input-list">
+      <label for="major">전공 이수 학점 입력</label>
+      <input type="number" id="major" min="0" required>
+
+      <label for="liberal">교양 이수 학점 입력</label>
+      <input type="number" id="liberal" min="0" required>
+
+      <label for="general">일반 이수 학점 입력</label>
+      <input type="number" id="general" min="0" required>
+
       <button type="submit">계산하기</button>
     </form>
     <div class="result" id="result"></div>
+    <div class="center">
+      <button class="reset-btn" id="resetBtn" type="button">모든 내용 리셋</button>
+    </div>
   </main>
   <script>
-    const TOTAL_GRADUATION_CREDIT = 130;
+    // localStorage 키
+    const keys = {
+      total: 'grad_total_credit',
+      majorReq: 'grad_major_req',
+      liberalReq: 'grad_liberal_req',
+      generalReq: 'grad_general_req',
+      major: 'grad_major',
+      liberal: 'grad_liberal',
+      general: 'grad_general',
+      result: 'grad_result'
+    };
+
+    // 입력값 채우기
+    function loadInputs() {
+      if(localStorage.getItem(keys.total))      document.getElementById('total-credit').value  = localStorage.getItem(keys.total);
+      if(localStorage.getItem(keys.majorReq))   document.getElementById('major-req').value     = localStorage.getItem(keys.majorReq);
+      if(localStorage.getItem(keys.liberalReq)) document.getElementById('liberal-req').value   = localStorage.getItem(keys.liberalReq);
+      if(localStorage.getItem(keys.generalReq)) document.getElementById('general-req').value   = localStorage.getItem(keys.generalReq);
+      if(localStorage.getItem(keys.major))      document.getElementById('major').value         = localStorage.getItem(keys.major);
+      if(localStorage.getItem(keys.liberal))    document.getElementById('liberal').value       = localStorage.getItem(keys.liberal);
+      if(localStorage.getItem(keys.general))    document.getElementById('general').value       = localStorage.getItem(keys.general);
+      if(localStorage.getItem(keys.result))     document.getElementById('result').innerText    = localStorage.getItem(keys.result);
+    }
+
+    // 입력값 저장
+    ['total-credit', 'major-req', 'liberal-req', 'general-req', 'major', 'liberal', 'general'].forEach(id => {
+      document.getElementById(id).addEventListener('input', function() {
+        let v = this.value;
+        switch(id) {
+          case 'total-credit':  localStorage.setItem(keys.total, v);      break;
+          case 'major-req':     localStorage.setItem(keys.majorReq, v);   break;
+          case 'liberal-req':   localStorage.setItem(keys.liberalReq, v); break;
+          case 'general-req':   localStorage.setItem(keys.generalReq, v); break;
+          case 'major':         localStorage.setItem(keys.major, v);      break;
+          case 'liberal':       localStorage.setItem(keys.liberal, v);    break;
+          case 'general':       localStorage.setItem(keys.general, v);    break;
+        }
+      });
+    });
+
+    // 계산
     document.getElementById('gradForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      const major = Number(document.getElementById('major').value);
-      const liberal = Number(document.getElementById('liberal').value);
-      const general = Number(document.getElementById('general').value);
-      const sum = major + liberal + general;
-      const left = Math.max(0, TOTAL_GRADUATION_CREDIT - sum);
-      document.getElementById('result').innerText =
-        `총 이수학점: ${sum}점 / 남은 졸업 요건: ${left}점`;
+      const totalCredit  = Number(document.getElementById('total-credit').value);
+      const majorReq     = Number(document.getElementById('major-req').value);
+      const liberalReq   = Number(document.getElementById('liberal-req').value);
+      const generalReq   = Number(document.getElementById('general-req').value);
+      const major        = Number(document.getElementById('major').value);
+      const liberal      = Number(document.getElementById('liberal').value);
+      const general      = Number(document.getElementById('general').value);
+
+      // 남은 학점 계산 (각 항목별, 총합)
+      let leftMajor   = Math.max(0, majorReq   - major);
+      let leftLiberal = Math.max(0, liberalReq - liberal);
+      let leftGeneral = Math.max(0, generalReq - general);
+      let sum = major + liberal + general;
+      let leftTotal = Math.max(0, totalCredit - sum);
+
+      let text =
+        `총 이수학점: ${sum} / 필요 졸업학점: ${totalCredit}\n` +
+        `- 전공: ${major} / ${majorReq} (남은 ${leftMajor})\n` +
+        `- 교양: ${liberal} / ${liberalReq} (남은 ${leftLiberal})\n` +
+        `- 일반: ${general} / ${generalReq} (남은 ${leftGeneral})\n` +
+        `▶ 남은 전체 졸업요건: ${leftTotal}학점`;
+
+      document.getElementById('result').innerText = text;
+      localStorage.setItem(keys.result, text);
     });
+
+    // 리셋
+    document.getElementById('resetBtn').addEventListener('click', function() {
+      Object.values(keys).forEach(k => localStorage.removeItem(k));
+      document.querySelectorAll('input[type=number]').forEach(inp => inp.value = '');
+      document.getElementById('result').innerText = '';
+    });
+
+    // 최초 로딩시
+    loadInputs();
   </script>
 </body>
 </html>
