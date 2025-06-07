@@ -1,60 +1,61 @@
-11주차
-	1. <mark style="background: #FF5582A6;">HPPT, HTTPS</mark>
-		헤더(URL)와 바디로 나뉨 
-	2. <mark style="background: #FF5582A6;">JSON</mark>
-		텍스트로만 구성되어 있어 전송속도가 빠르며, 어떤 언어를 쓰던 표현할 수 있다.
-		자바스크립트에서는 바로 객체로 변환할 수 있다.
-		JSON의 키에는 ""을 꼭 붙혀야한다. 주고받을땐 백틱 를 꼭 붙혀야한다.
-		객체를 JSON형식으로 변환할때 직렬화 라고한다.
-		JWON.stringify(객체) -> 직렬화
-		JSON을 객체형식으로 변환할때 파싱 이라고한다.
-		JWON.parse(JSON 문자열) -> 파싱
-		비동기 방식 -> AJAX (페이스북처럼)
-		- <mark style="background: #ABF7F7A6;">실습</mark>
-			1. <mark style="background: #FFF3A3A6;">XMLHttpRequest</mark>
-				let xhr = new XMLHttpRequest();  – XMLHttpRequest 객체 인스턴스를 생성해 xhr 변수에 할당  
-				xhr.open("GET", "student.json");  – GET 방식으로 student.json 리소스에 대한 요청을 초기화  
-				xhr.send();  – 설정된 요청을 서버에 전송  
-			2. <mark style="background: #FFF3A3A6;">JSON 자료 가져와 표시하기</mark>
-				let xhr = new XMLHttpRequest();  – XMLHttpRequest 객체 인스턴스를 생성해 xhr 변수에 할당  
-				xhr.open("GET", "student.json");  – GET 방식으로 student.json에 대한 요청을 초기화  
-				xhr.send();  – 설정된 요청을 서버에 전송  
-				.
-				xhr.onreadystatechange = function () {  – 요청 상태가 변경될 때 실행할 콜백 함수 등록  
-				if (xhr.readyState === 4 && xhr.status === 200) {  – 요청이 완료(4)되고 성공(200)했는지 검사  
-			    let student = JSON.parse(xhr.responseText);  – 응답 텍스트를 JSON 객체로 파싱해 student 변수에 저장  
-			    document.getElementById("표사할영역").innerHTML = 백틱  – #.result 요소의 HTML 콘텐츠를 템플릿으로 설정  
-			    <.h1>${student.name}<./h1>  
-			    <.ul>  
-		        <.li>전공: ${student.major}<./li>  
-		        <.li>학년: ${student.grade}<./li>  
-			    <./ul>  
-			    백틱;  – 템플릿 리터럴 끝  
-				}  – if 문 종료  
-				};  – onreadystatechange 등록 블록 종료  
-	3. <mark style="background: #FF5582A6;">예외처리</mark>
-		- <mark style="background: #ABF7F7A6;">try catch finally</mark>
-			try {  – 예외 발생 가능성이 있는 코드 블록 시작  
-			  …    – 실행할 코드(생략)  
-			} catch(err) {  – 예외 발생 시 err 변수로 예외 객체 받아 처리  
-			  console.log(`오류 발생 : ${err}`);       – 전체 예외 객체를 템플릿 문자열에 보간해 에러 로그 출력  
-			}      – catch 블록 종료
-			console.log("끝");
-		- <mark style="background: #ABF7F7A6;">try catch finally 빨간 오류메세지 </mark>
-			try {  – 예외 발생 가능성이 있는 코드 블록 시작  
-			  …    – 실행할 코드(생략)  
-			} catch(err) {  – 예외 발생 시 err 변수로 예외 객체 받아 처리  
-			  console.error(`오류 발생 : ${err}`);       – 전체 예외 객체를 템플릿 문자열에 보간해 에러 로그 출력  
-			  console.error(`오류 발생 : ${err.name}`);  – 예외 객체의 이름(err.name)을 보간해 에러 로그 출력  
-			  console.error(`오류 발생 : ${err.message}`); – 예외 객체의 메시지(err.message)를 보간해 에러 로그 출력  
-			}      – catch 블록 종료  
-		- <mark style="background: #ABF7F7A6;">throw 에러 일부러 만들기</mark>
-			let json = '{"grade": 3, "age": 25}';  – grade와 age를 속성으로 갖는 JSON 문자열을 json에 할당  
-			try {  – 예외 발생 가능성이 있는 코드 블록 시작  
-			 let user = JSON.parse(json);  – JSON 문자열을 객체로 변환해 user에 할당  
-			if (!user.name) {  – user.name이 없으면  
-			throw "사용자 이름이 없습니다.";  – 예외 메시지를 던짐  
-			 }  – if 블록 종료  
-			} catch (err) {  – 예외 발생 시 err 객체로 catch 블록 진입  
-			console.error(err);  – err 값을 에러 레벨로 콘솔에 출력  
-			}  – catch 블록 종료  
+11주차<br><br>
+
+1. <mark style="background: #FF5582A6;">HPPT, HTTPS</mark><br>
+&nbsp;&nbsp;헤더(URL)와 바디로 나뉨<br><br>
+
+2. <mark style="background: #FF5582A6;">JSON</mark><br>
+&nbsp;&nbsp;텍스트로만 구성되어 있어 전송속도가 빠르며, 어떤 언어를 쓰던 표현할 수 있다.<br>
+&nbsp;&nbsp;자바스크립트에서는 바로 객체로 변환할 수 있다.<br>
+&nbsp;&nbsp;JSON의 키에는 ""을 꼭 붙혀야한다. 주고받을땐 백틱을 꼭 붙혀야한다.<br>
+&nbsp;&nbsp;객체를 JSON형식으로 변환할때 직렬화 라고한다.<br>
+&nbsp;&nbsp;JSON.stringify(객체) -> 직렬화<br>
+&nbsp;&nbsp;JSON을 객체형식으로 변환할때 파싱 이라고한다.<br>
+&nbsp;&nbsp;JSON.parse(JSON 문자열) -> 파싱<br>
+&nbsp;&nbsp;비동기 방식 -> AJAX (페이스북처럼)<br><br>
+
+- <mark style="background: #ABF7F7A6;">실습</mark><br>
+&nbsp;&nbsp;1. <mark style="background: #FFF3A3A6;">XMLHttpRequest</mark><br>
+&nbsp;&nbsp;&nbsp;&nbsp;let xhr = new XMLHttpRequest();  – XMLHttpRequest 객체 인스턴스를 생성해 xhr 변수에 할당<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xhr.open("GET", "student.json");  – GET 방식으로 student.json 리소스에 대한 요청을 초기화<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xhr.send();  – 설정된 요청을 서버에 전송<br><br>
+
+&nbsp;&nbsp;2. <mark style="background: #FFF3A3A6;">JSON 자료 가져와 표시하기</mark><br>
+&nbsp;&nbsp;&nbsp;&nbsp;let xhr = new XMLHttpRequest();  – XMLHttpRequest 객체 인스턴스를 생성해 xhr 변수에 할당<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xhr.open("GET", "student.json");  – GET 방식으로 student.json에 대한 요청을 초기화<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xhr.send();  – 설정된 요청을 서버에 전송<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xhr.onreadystatechange = function () {  – 요청 상태가 변경될 때 실행할 콜백 함수 등록<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (xhr.readyState === 4 && xhr.status === 200) {  – 요청이 완료(4)되고 성공(200)했는지 검사<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let student = JSON.parse(xhr.responseText);  – 응답 텍스트를 JSON 객체로 파싱해 student 변수에 저장<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;document.getElementById("표사할영역").innerHTML = \`<h1>\${student.name}</h1><ul><li>전공: \${student.major}</li><li>학년: \${student.grade}</li></ul>\`;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}  – if 문 종료<br>
+&nbsp;&nbsp;&nbsp;&nbsp;};  – onreadystatechange 등록 블록 종료<br><br>
+
+3. <mark style="background: #FF5582A6;">예외처리</mark><br>
+- <mark style="background: #ABF7F7A6;">try catch finally</mark><br>
+&nbsp;&nbsp;try {  – 예외 발생 가능성이 있는 코드 블록 시작<br>
+&nbsp;&nbsp;&nbsp;&nbsp;…    – 실행할 코드(생략)<br>
+&nbsp;&nbsp;} catch(err) {  – 예외 발생 시 err 변수로 예외 객체 받아 처리<br>
+&nbsp;&nbsp;&nbsp;&nbsp;console.log(\`오류 발생 : \${err}\`);       – 전체 예외 객체를 템플릿 문자열에 보간해 에러 로그 출력<br>
+&nbsp;&nbsp;}      – catch 블록 종료<br>
+&nbsp;&nbsp;console.log("끝");<br><br>
+
+- <mark style="background: #ABF7F7A6;">try catch finally 빨간 오류메세지</mark><br>
+&nbsp;&nbsp;try {  – 예외 발생 가능성이 있는 코드 블록 시작<br>
+&nbsp;&nbsp;&nbsp;&nbsp;…    – 실행할 코드(생략)<br>
+&nbsp;&nbsp;} catch(err) {  – 예외 발생 시 err 변수로 예외 객체 받아 처리<br>
+&nbsp;&nbsp;&nbsp;&nbsp;console.error(\`오류 발생 : \${err}\`);       – 전체 예외 객체를 템플릿 문자열에 보간해 에러 로그 출력<br>
+&nbsp;&nbsp;&nbsp;&nbsp;console.error(\`오류 발생 : \${err.name}\`);  – 예외 객체의 이름(err.name)을 보간해 에러 로그 출력<br>
+&nbsp;&nbsp;&nbsp;&nbsp;console.error(\`오류 발생 : \${err.message}\`); – 예외 객체의 메시지(err.message)를 보간해 에러 로그 출력<br>
+&nbsp;&nbsp;}      – catch 블록 종료<br><br>
+
+- <mark style="background: #ABF7F7A6;">throw 에러 일부러 만들기</mark><br>
+&nbsp;&nbsp;let json = '{"grade": 3, "age": 25}';  – grade와 age를 속성으로 갖는 JSON 문자열을 json에 할당<br>
+&nbsp;&nbsp;try {  – 예외 발생 가능성이 있는 코드 블록 시작<br>
+&nbsp;&nbsp;&nbsp;&nbsp;let user = JSON.parse(json);  – JSON 문자열을 객체로 변환해 user에 할당<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (!user.name) {  – user.name이 없으면<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw "사용자 이름이 없습니다.";  – 예외 메시지를 던짐<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}  – if 블록 종료<br>
+&nbsp;&nbsp;} catch (err) {  – 예외 발생 시 err 객체로 catch 블록 진입<br>
+&nbsp;&nbsp;&nbsp;&nbsp;console.error(err);  – err 값을 에러 레벨로 콘솔에 출력<br>
+&nbsp;&nbsp;}  – catch 블록 종료<br>
+`;
