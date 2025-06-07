@@ -44,6 +44,7 @@
       position: relative;
       min-height: 420px;
     }
+    /* 대학링크: PC/넓은 화면에선 왼쪽에 고정 */
     .school-link-box {
       position: absolute;
       left: -260px;
@@ -62,7 +63,7 @@
     .school-link-box label {
       font-weight: bold;
       margin-bottom: 12px;
-      text-align: center; /* 가운데 정렬 */
+      text-align: center;
       font-size: 1.07rem;
       letter-spacing: 1px;
     }
@@ -72,7 +73,7 @@
       border: 1px solid #b7c7df;
       margin-bottom: 0.6rem;
       font-size: 0.97rem;
-      width: 94%;  /* 더 넓게 */
+      width: 94%;
     }
     .school-link-box button {
       padding: 0.5rem 0.6rem;
@@ -88,19 +89,22 @@
       background: #b3b3b3;
       cursor: default;
     }
-@media (max-width: 700px) {
-  .school-link-box {
-    position: static;
-    left: auto;
-    top: auto;
-    transform: none;
-    width: 100%;
-    margin-bottom: 1.5rem;
-    border-radius: 8px;
-    box-shadow: none;
-    padding: 1rem 0.8rem 1.1rem 0.8rem;
-  }
-}
+    /* 반응형: 700px 이하면 왼쪽 고정 해제하고 위로 */
+    @media (max-width: 700px) {
+      .school-link-box {
+        position: static;
+        left: auto;
+        top: auto;
+        transform: none;
+        width: 100%;
+        margin-bottom: 1.5rem;
+        border-radius: 8px;
+        box-shadow: none;
+        padding: 1rem 0.8rem 1.1rem 0.8rem;
+      }
+      main { padding: 1rem; min-height: auto; }
+      .school-link-box input[type=text] { width: 100%; }
+    }
     .feature-list {
       list-style: none;
       padding: 0;
@@ -139,7 +143,7 @@
     </nav>
   </header>
   <main>
-    <!-- 대학 홈페이지 바로가기(왼쪽) -->
+    <!-- 대학 홈페이지 바로가기(왼쪽/작은화면에선 상단) -->
     <div class="school-link-box">
       <label for="schoolUrl">학교 홈페이지</label>
       <input type="text" id="schoolUrl" 
