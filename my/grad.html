@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>졸업학점 계산기</title>
+  <style>
+    /* 위 main 페이지 스타일과 비슷하게 */
+    body { font-family: 'Noto Sans KR', sans-serif; background: #f7f9fc; margin: 0; }
+    main { max-width: 400px; margin: 3rem auto; background: white; border-radius: 12px; box-shadow: 0 2px 8px #eee; padding: 2rem; }
+    label { display: block; margin: 1rem 0 0.4rem; }
+    input[type=number] { width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ccc; }
+    button { margin-top: 1.3rem; width: 100%; background: #004080; color: white; border: none; padding: 0.8rem; font-size: 1.05rem; border-radius: 8px; cursor: pointer;}
+    .result { margin-top: 1.2rem; font-size: 1.1rem; color: #004080; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <main>
+    <h2>졸업학점 계산기</h2>
+    <form id="gradForm">
+      <label>전공 이수 학점</label>
+      <input type="number" id="major" required />
+      <label>교양 이수 학점</label>
+      <input type="number" id="liberal" required />
+      <label>일반 이수 학점</label>
+      <input type="number" id="general" required />
+      <button type="submit">계산하기</button>
+    </form>
+    <div class="result" id="result"></div>
+  </main>
+  <script>
+    // 학교별 총 졸업 학점 설정(예시: 130학점)
+    const TOTAL_GRADUATION_CREDIT = 130;
+    document.getElementById('gradForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const major = Number(document.getElementById('major').value);
+      const liberal = Number(document.getElementById('liberal').value);
+      const general = Number(document.getElementById('general').value);
+      const sum = major + liberal + general;
+      const left = Math.max(0, TOTAL_GRADUATION_CREDIT - sum);
+      document.getElementById('result').innerText =
+        `총 이수학점: ${sum}점 / 남은 졸업 요건: ${left}점`;
+    });
+  </script>
+</body>
+</html>
