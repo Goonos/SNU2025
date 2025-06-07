@@ -6,21 +6,16 @@
   <style>
     body { font-family: 'Noto Sans KR', sans-serif; background: #f7f9fc; margin: 0; }
     main { max-width: 480px; margin: 3rem auto; background: white; border-radius: 12px; box-shadow: 0 2px 8px #eee; padding: 2rem; }
-    .main-btn { width:auto; margin-bottom:1.5rem; padding:0.6rem 1.4rem; font-weight:600; font-size:1.02rem; background:#004080; color:#fff; border:none; border-radius:7px; cursor:pointer;}
+    .main-btn { width:100%; margin-bottom:1.5rem; padding:0.6rem 1.4rem; font-weight:600; font-size:1.02rem; background:#004080; color:#fff; border:none; border-radius:7px; cursor:pointer;}
     .year-section { background:#f6f9fe; border-radius:9px; padding:1.1rem 1rem; margin-bottom:1.7rem;}
-    .year-title {
-      font-size:1.1rem; font-weight:600; margin-bottom:0.9rem;
-      text-align: center;
-    }
-    .grade-list {
+    .year-title { font-size:1.1rem; font-weight:600; margin-bottom:0.9rem; text-align: center;}
+    .grade-list-wrap { display:flex; flex-direction:column; align-items:center; }
+    .flex-row {
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
-      gap: 10px;
-      margin-bottom: 12px;
-      max-width: 260px;
-      margin-left: auto;
-      margin-right: auto;
+      gap: 12px;
+      margin-bottom: 10px;
+      width: 100%;
     }
     .grade-list input[type=number] {
       width: 70px;
@@ -29,6 +24,7 @@
       border: 1px solid #ccc;
       font-size: 1.05rem;
       text-align: center;
+      box-sizing: border-box;
     }
     .button-row {
       display: flex;
@@ -71,13 +67,13 @@
 </head>
 <body>
   <main>
-    <button class="main-btn" onclick="location.href='https://goonos.github.io/SNU2025/index.html'">홈으로</button>
+    <button class="main-btn" onclick="location.href='main.html'">홈으로</button>
     <h2>학점 계산기</h2>
     <form id="gpaForm">
       <!-- 1학년 -->
       <div class="year-section" data-year="1">
         <div class="year-title">1학년</div>
-        <div class="grade-list" id="grade-list-1"></div>
+        <div class="grade-list-wrap" id="grade-list-wrap-1"></div>
         <div class="button-row">
           <button type="button" class="add-btn" data-year="1">학점추가</button>
           <button type="button" class="avg-btn" data-year="1">평균학점 계산</button>
@@ -90,7 +86,7 @@
       <!-- 2학년 -->
       <div class="year-section" data-year="2">
         <div class="year-title">2학년</div>
-        <div class="grade-list" id="grade-list-2"></div>
+        <div class="grade-list-wrap" id="grade-list-wrap-2"></div>
         <div class="button-row">
           <button type="button" class="add-btn" data-year="2">학점추가</button>
           <button type="button" class="avg-btn" data-year="2">평균학점 계산</button>
@@ -103,7 +99,7 @@
       <!-- 3학년 -->
       <div class="year-section" data-year="3">
         <div class="year-title">3학년</div>
-        <div class="grade-list" id="grade-list-3"></div>
+        <div class="grade-list-wrap" id="grade-list-wrap-3"></div>
         <div class="button-row">
           <button type="button" class="add-btn" data-year="3">학점추가</button>
           <button type="button" class="avg-btn" data-year="3">평균학점 계산</button>
@@ -116,7 +112,7 @@
       <!-- 4학년 -->
       <div class="year-section" data-year="4">
         <div class="year-title">4학년</div>
-        <div class="grade-list" id="grade-list-4"></div>
+        <div class="grade-list-wrap" id="grade-list-wrap-4"></div>
         <div class="button-row">
           <button type="button" class="add-btn" data-year="4">학점추가</button>
           <button type="button" class="avg-btn" data-year="4">평균학점 계산</button>
@@ -137,29 +133,39 @@
       const data = localStorage.getItem('grades_' + year);
       return data ? JSON.parse(data) : [];
     }
+    // 평균점수 저장/불러오기
+    function saveYearAvg(year, avgStr) {
+      localStorage.setItem('avg_' + year, avgStr);
+    }
+    function loadYearAvg(year) {
+      return localStorage.getItem('avg_' + year) || '';
+    }
+    // 입력창(3개씩 줄바꿈, 칸 사이 일정)
     function setGradeInputs(year) {
-      const gradeList = document.getElementById('grade-list-' + year);
-      gradeList.innerHTML = '';
+      const wrap = document.getElementById('grade-list-wrap-' + year);
+      wrap.innerHTML = '';
       const grades = loadYearGrades(year);
-      for (let i = 0; i < grades.length; i++) {
+      let rowDiv = null;
+      grades.forEach((grade, idx) => {
+        if (idx % 3 === 0) {
+          rowDiv = document.createElement('div');
+          rowDiv.className = 'flex-row grade-list';
+          wrap.appendChild(rowDiv);
+        }
         const inp = document.createElement('input');
         inp.type = 'number';
         inp.step = '0.01';
         inp.min = '0';
         inp.max = '4.5';
-        inp.value = grades[i];
+        inp.value = grade;
         inp.addEventListener('input', function() {
-          grades[i] = inp.value;
+          grades[idx] = inp.value;
           saveYearGrades(year, grades);
         });
-        // 한 줄에 3개 넘지 않게 line break
-        if (i > 0 && i % 3 === 0) {
-          gradeList.appendChild(document.createElement('br'));
-        }
-        gradeList.appendChild(inp);
-      }
+        rowDiv.appendChild(inp);
+      });
     }
-    // 학점추가 (3개까지만 한 줄, 추가는 무제한)
+    // 학점추가
     document.querySelectorAll('.add-btn').forEach(function(btn){
       btn.addEventListener('click', function(){
         const year = btn.getAttribute('data-year');
@@ -169,7 +175,7 @@
         setGradeInputs(year);
       });
     });
-    // 평균 학점 계산
+    // 평균 학점 계산(계산 결과 저장)
     document.querySelectorAll('.avg-btn').forEach(function(btn){
       btn.addEventListener('click', function(){
         const year = btn.getAttribute('data-year');
@@ -177,24 +183,31 @@
         const resultDiv = document.getElementById('result-'+year);
         if (grades.length === 0) {
           resultDiv.textContent = '학점을 입력해 주세요.';
+          saveYearAvg(year, '');
           return;
         }
         const avg = grades.reduce((a,b)=>a+b,0) / grades.length;
-        resultDiv.textContent = `평균 학점: ${avg.toFixed(2)} (${grades.length}개)`;
+        const avgStr = `평균 학점: ${avg.toFixed(2)} (${grades.length}개)`;
+        resultDiv.textContent = avgStr;
+        saveYearAvg(year, avgStr);
       });
     });
-    // 리셋 버튼
+    // 리셋 버튼(입력과 평균 모두 삭제)
     document.querySelectorAll('.grade-reset-btn').forEach(function(btn){
       btn.addEventListener('click', function(){
         const year = btn.getAttribute('data-year');
         localStorage.removeItem('grades_' + year);
+        localStorage.removeItem('avg_' + year);
         setGradeInputs(year);
         document.getElementById('result-' + year).textContent = '';
       });
     });
-    // 입력필드에서 바로 저장
+    // 시작할 때 각 학년 세팅 + 평균도 복원
     ['1','2','3','4'].forEach(function(year){
       setGradeInputs(year);
+      // 평균값 복원
+      const avg = loadYearAvg(year);
+      document.getElementById('result-' + year).textContent = avg;
     });
   </script>
 </body>
