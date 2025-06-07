@@ -1,0 +1,116 @@
+7장<br><br>
+
+노드를 구성하는 원칙<br>
+- 모든 HTML 태그는 요소 노드가 됩니다.<br>
+- HTML 태그에서 사용하는 텍스트 내용은 자식 노드인 텍스트 노드가 됩니다.<br>
+- HTML 태그에 있는 속성은 모두 자식 노드인 속성 노드가 됩니다.<br>
+- 주석들은 주석 노드가 됩니다.<br><br>
+
+텍스트 내용이 있는 노드 추가하기<br>
+새로운 추가할 노드에 텍스트 내용만 있다면<br><br>
+
+1) 텍스트 노드를 만들고 (텍스트 내용이 있는 노드)<br>
+2) 요소 노드를 만들어서 (예를 들어, p 요소 노드)<br>
+3) 텍스트 노드를 요소 노드에 연결한 후 (p 요소 노드에 텍스트 내용 연결)<br>
+4) 원하는 영역에 추가합니다.<br><br>
+
+요소 노드 만들기 - createElement()<br>
+DOM에 새로운 요소를 추가할 때 가장 먼저 요소 노드를 만들어야 합니다.<br><br>
+
+document.createElement(요소명)<br><br>
+
+let newP = document.createElement("p")<br><br>
+
+텍스트 노드 만들기 - createTextNode()<br>
+텍스트 노드를 만드는 메서드는 createTextNode()입니다.<br><br>
+
+document.createTextNode(텍스트)<br><br>
+
+let textNode = document.createTextNode("Typescript")<br><br>
+
+자식 노드 연결하기 - appendChild()<br>
+앞에서 새로 만든 p 노드와 여기에 사용할 텍스트 노드를 만들었습니다.<br>
+아직까지는 두 개의 노드가 따로 떨어진 상태이고,<br>
+텍스트 노드는 요소 노드의 자식 노드라는 것, 기억하죠?<br>
+서로 부모 노드와 자식 노도로 연결해야 합니다.<br><br>
+
+부모_노드.appendChild(자식_노드)<br><br>
+
+newP.appendChild(textNode) // 텍스트 노드를 p 요소에 연결합니다.<br>
+document.body.appendChild(newP) // p 요소 노드를 body 노드에 연결합니다.<br><br>
+
+---
+
+요소 노드 만들기 - createElement()<br><br>
+
+createElement() 메서드를 사용해서 새로운 이미지 노드를 만듭니다.<br><br>
+
+let newImg = document.createElement("img")<br><br>
+
+---
+
+속성 노드 만들기 - createAttribute()<br><br>
+
+1) createAttribute() 메서드를 사용해서 속성 노드를 만들고,<br>
+2) 속성의 값은 value 프로퍼티를 사용해서 지정합니다.<br><br>
+
+document.createAttribute(속성명)<br>
+노드명.value = 속성값<br><br>
+
+예)<br>
+let srcNode = document.createAttribute("src")<br>
+srcNode.value = "images/wall.jpg"<br><br>
+
+---
+
+속성 노드 연결하기 - setAttributeNode()<br>
+새로 만든 속성 노드를 요소 노드에 추가하려면 setAttributeNode() 메서드를 사용합니다.<br>
+setAttribute()와 다른 메서드이므로 꼭 구별해서 사용하세요.<br><br>
+
+요소 노드.setAttributeNode(속성 노드)<br><br>
+
+예)<br>
+newImg.setAttributeNode(srcNode)<br><br>
+
+---
+
+기존 노드 앞에 추가하기 - insertBefore()<br>
+지금까지 살펴본 방법은, 새로 만든 요소를 부모 노드의 맨 마지막에 자식 노드로 추가했습니다.<br>
+insertBefore()를 사용하면 특정 노드 앞에 새 요소를 추가할 수 있습니다.<br><br>
+
+insertBefore(새 노드, 기존 노드)<br><br>
+
+---
+
+노드 삭제하기 - remove()<br>
+remove()는 삭제하려는 요소에서 사용하는 메서드입니다.<br><br>
+
+요소.remove()<br><br>
+
+노드 삭제하기 - removeChild()<br><br>
+
+- removeChild()는 자식 노드 삭제<br>
+- 이 메서드를 사용하려면 우선 부모 노드를 찾아야 하고 그 후에 자식 노드를 삭제해야 한다.<br>
+- 예전에는 removeChild() 메서드만 사용할 수 있어서, 주로 removeChild()를 사용했지만,<br>
+이제 모던 브라우저에서는 remove() 메서드를 사용해도 된다.<br><br>
+
+부모 노드를 찾는 parentNode 프로퍼티<br>
+노드명.parentNode<br><br>
+
+자식 노드를 제거하는 removeChild() 메서드<br>
+부모 노드.removeChild(자식 노드)<br><br>
+
+---
+
+이벤트 리스너에서 함수 안에 있는 this<br><br>
+
+item.addEventListener("click", function() {<br>
+&nbsp;&nbsp;this.parentNode.removeChild(this);<br>
+});<br><br>
+
+이벤트 리스너에서 function() { ... }에 this를 사용하면 this는 이벤트가 발생한 노드를 가리킵니다.<br>
+(예) 첫번째 항목을 클릭했다면 첫번째 요소가 this가 됩니다.<br><br>
+
+이벤트 리스너에서 화살표 함수를 사용할 경우 this는 최상위 객체 window를 가리킵니다.<br>
+-> 화살표 함수를 사용할 경우 클릭한 요소를 찾을 때 this를 사용할 수 없습니다.<br>
+-> 이벤트가 발생한 요소를 this로 사용하려면 화살표 함수를 사용하지 마세요.<br>
