@@ -6,58 +6,74 @@
   <style>
     body { font-family: 'Noto Sans KR', sans-serif; background: #f7f9fc; margin: 0; }
     main { max-width: 400px; margin: 3rem auto; background: white; border-radius: 12px; box-shadow: 0 2px 8px #eee; padding: 2rem; }
-    label { display: block; margin: 1rem 0 0.4rem; }
-    input[type=number] { width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ccc; }
-    button { margin-top: 1.3rem; width: 100%; background: #004080; color: white; border: none; padding: 0.8rem; font-size: 1.05rem; border-radius: 8px; cursor: pointer;}
+    label { display: block; margin: 1.3rem 0 0.4rem; }
+    input[type=number] { width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ccc; font-size:1.06rem;}
+    button[type=submit], .main-btn { margin-top: 1.3rem; width: 100%; background: #004080; color: white; border: none; padding: 0.8rem; font-size: 1.05rem; border-radius: 8px; cursor: pointer;}
+    .main-btn { width:auto; margin-top:0; margin-bottom:1.5rem; padding:0.6rem 1.4rem; font-weight:600; font-size:1.02rem; }
     .result { margin-top: 1.2rem; font-size: 1.1rem; color: #004080; font-weight: bold; }
-    .input-list { margin-bottom: 1.5rem;}
+    .grade-section { background:#f6f9fe; border-radius:9px; padding:1.1rem 1rem; margin-bottom:1.2rem;}
+    .grade-section label { margin:0 0 0.3rem 0; font-weight:600;}
   </style>
 </head>
 <body>
   <main>
-      <button class="main-btn" onclick="location.href='https://goonos.github.io/SNU2025/index.html'">홈으로</button>
+    <button class="main-btn" onclick="location.href='main.html'">홈으로</button>
     <h2>학점 계산기</h2>
     <form id="gpaForm">
-      <div class="input-list" id="inputList">
-        <label>1번 과목 학점</label>
-        <input type="number" class="grade" step="0.01" min="0" max="4.5" required />
+      <div class="grade-section">
+        <label for="grade1">1학년 평균 학점</label>
+        <input type="number" step="0.01" min="0" max="4.5" id="grade1" class="grade" required>
       </div>
-      <button type="button" onclick="addInput()">과목 추가</button>
+      <div class="grade-section">
+        <label for="grade2">2학년 평균 학점</label>
+        <input type="number" step="0.01" min="0" max="4.5" id="grade2" class="grade" required>
+      </div>
+      <div class="grade-section">
+        <label for="grade3">3학년 평균 학점</label>
+        <input type="number" step="0.01" min="0" max="4.5" id="grade3" class="grade" required>
+      </div>
+      <div class="grade-section">
+        <label for="grade4">4학년 평균 학점</label>
+        <input type="number" step="0.01" min="0" max="4.5" id="grade4" class="grade" required>
+      </div>
       <button type="submit">평균 학점 계산</button>
     </form>
     <div class="result" id="result"></div>
   </main>
   <script>
-    let subjectCount = 1;
-    function addInput() {
-      subjectCount++;
-      const inputList = document.getElementById('inputList');
-      const label = document.createElement('label');
-      label.textContent = `${subjectCount}번 과목 학점`;
-      const input = document.createElement('input');
-      input.type = "number";
-      input.className = "grade";
-      input.step = "0.01";
-      input.min = "0";
-      input.max = "4.5";
-      input.required = true;
-      inputList.appendChild(label);
-      inputList.appendChild(input);
+    // 로컬스토리지에서 불러오기
+    function loadGrades() {
+      for(let i=1; i<=4; i++) {
+        const val = localStorage.getItem('grade'+i);
+        if(val !== null) document.getElementById('grade'+i).value = val;
+      }
     }
+    // 입력값 바뀔 때마다 저장
+    document.querySelectorAll('.grade').forEach(function(input, idx){
+      input.addEventListener('input', function() {
+        localStorage.setItem('grade'+(idx+1), input.value);
+      });
+    });
+    // 계산
     document.getElementById('gpaForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      const grades = Array.from(document.querySelectorAll('.grade'))
-        .map(el => parseFloat(el.value))
-        .filter(v => !isNaN(v));
-      if (grades.length === 0) {
+      let grades = [];
+      for(let i=1;i<=4;i++){
+        const v = parseFloat(document.getElementById('grade'+i).value);
+        if(!isNaN(v)) grades.push(v);
+      }
+      if(grades.length === 0) {
         document.getElementById('result').innerText = '학점을 입력해 주세요.';
         return;
       }
       const sum = grades.reduce((a,b) => a+b, 0);
       const avg = sum / grades.length;
       document.getElementById('result').innerText =
-        `평균 학점: ${avg.toFixed(2)} (${grades.length}과목)`;
+        `전체 평균 학점: ${avg.toFixed(2)}`;
     });
+
+    // 페이지 로드될 때 값 채움
+    loadGrades();
   </script>
 </body>
 </html>
