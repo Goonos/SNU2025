@@ -1,0 +1,31 @@
+0주차(9장)
+	- <mark style="background: #FF5582A6;">객체만들기</mark>
+		객체는 키:값 형태를 띄고 있으며 객체는 중괄호로 구분한다
+	- <mark style="background: #FF5582A6;">생성자 함수</mark>
+		생성자 함수는 함수 내부에서 this를 사용한다
+	- <mark style="background: #FF5582A6;">객체의 키와 값</mark>
+		for( 변수 in 객체) {} 하면 객체의 키만 가져올 수 있다. 
+		object.keys(객체명) - 객체의 키만 배열로 가져온다
+		object.values(객체명) - 객체의 값만 배열로 가져온다.
+		object.entries(객체명) - 객체의 키와 값을 배열(2차원)로 가져온다.
+	- <mark style="background: #FF5582A6;">생성자 함수</mark>
+		사용자 함수를 선언하는 순간 해당 함수의 프로토타입이 자동적으로 생성된다.
+		객체 생성자 함수에 의해 생성되는 객채들이 공유하는 속성과 매소드를 저장함
+		프로토타입을 상속을 하면 해당 사용자 함수의 부모랑 상속도 자동으로 상속처리된다.
+		따라서 자바스크립트의 상속은 프로토타입을 통해 이루어진다.
+	- <mark style="background: #FF5582A6;">프로토타입 상속</mark>
+		생성자 함수에서 매서드를 생성하면 그게 프로토타입이 됨
+		부모는 자식의 매서드를 사용할 수 없음
+		function Textbook(title, price, major) {  – Textbook 생성자 함수 선언
+		<mark style="background: #ABF7F7A6;">Book.call(this, title, price);</mark>           – Book.call로 this에 title, price 초기화 재사용
+		this.major = major;                      – major 값을 인스턴스 프로퍼티에 할당
+		}                                           – Textbook 함수 종료
+		Textbook.prototype.buyTextbook = function() {  – buyTextbook 메소드 정의 시작
+		console.log(`${this.major} 전공 서적, ${this.title}을 구매했습니다.`);  – 템플릿으로 구매 메시지를 콘솔에 출력
+		};                                          – buyTextbook 메소드 정의 종료
+		<mark style="background: #ABF7F7A6;">Object.setPrototypeOf(Textbook.prototype, Book.prototype);</mark>  – Textbook.prototype의 프로토타입을 Book.prototype으로 설정(상속 연결)
+	- <mark style="background: #FF5582A6;">클래스 상속</mark>
+		부모는 자식의 매서드를 사용할 수 없음
+		class TextbookC extends BookC - 상속
+		super(title,price);  - BookC의 타이틀과 프라이스 가져옴
+		this.magor = major - 자식의 메이저를 사용함
