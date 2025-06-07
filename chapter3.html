@@ -1,0 +1,53 @@
+6장 : 이벤트 처리하기, 이벤트 객체, 기본동작 취소, 이벤트 전파<br><br>
+
+- 이벤트란<br>
+&nbsp;&nbsp;웹 브라우저 내에서 사용자가 실행하는 동작<br>
+&nbsp;&nbsp;이벤트 발생 시 처리할 동작이 있어야 하며, 이를 위해 이벤트 핸들러가 필요<br><br>
+
+- 이벤트 연결 방법<br>
+&nbsp;&nbsp;1. HTML 태그 내 onXXX 속성 사용<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;button onclick="alert('클릭!')"&gt;Click&lt;/button&gt;<br>
+&nbsp;&nbsp;2. 자바스크립트에서 함수 연결<br>
+&nbsp;&nbsp;3. addEventListener("이벤트명", 함수, 캡처여부)<br><br>
+
+- 이벤트 버블링과 캡처링<br>
+&nbsp;&nbsp;버블링: 이벤트가 하위 요소에서 상위 요소로 전파<br>
+&nbsp;&nbsp;캡처링: 이벤트가 상위 요소에서 하위 요소로 전파<br>
+&nbsp;&nbsp;addEventListener의 세 번째 인자(true = 캡처, false = 버블)<br><br>
+
+- 이벤트 객체<br>
+&nbsp;&nbsp;이벤트 발생 시 관련 정보가 담긴 객체 전달<br>
+&nbsp;&nbsp;예) keydown 이벤트에서 e.code, e.key 사용 가능<br><br>
+
+- 이벤트 예시<br>
+&nbsp;&nbsp;document.body.addEventListener("keydown", (e) => {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;console.log(\`code: \${e.code}, key: \${e.key}\`);<br>
+&nbsp;&nbsp;});<br><br>
+
+- 기본 동작 취소<br>
+&nbsp;&nbsp;e.preventDefault()로 기본 동작 방지 가능<br><br>
+
+- 이벤트 전파 중지<br>
+&nbsp;&nbsp;e.stopPropagation()으로 이벤트 전파 중단 가능<br><br>
+
+7장 : 내용 추가/제거 및 방법<br><br>
+
+- DOM 요소 추가<br>
+&nbsp;&nbsp;createElement(), appendChild(), insertBefore() 등 사용<br><br>
+
+- DOM 요소 제거<br>
+&nbsp;&nbsp;removeChild() 사용<br><br>
+
+- 예시<br>
+&nbsp;&nbsp;const div = document.createElement('div');<br>
+&nbsp;&nbsp;div.textContent = "새로운 내용";<br>
+&nbsp;&nbsp;document.body.appendChild(div);<br><br>
+
+- 내용 수정<br>
+&nbsp;&nbsp;element.textContent, element.innerHTML 활용<br><br>
+
+- 스타일 조작<br>
+&nbsp;&nbsp;element.style 속성 사용<br><br>
+
+- 실습 예시<br>
+&nbsp;&nbsp;버튼 클릭 시 리스트 항목 추가/삭제 구현 가능<br>
