@@ -44,10 +44,10 @@
       position: relative;
       min-height: 420px;
     }
-    /* 대학링크: PC/넓은 화면에선 왼쪽에 고정 */
+    /* 왼쪽 학교링크: 기존보다 100px 더 왼쪽 */
     .school-link-box {
       position: absolute;
-      left: -260px;
+      left: -360px; /* -260px -> -360px */
       top: 40%;
       transform: translateY(-50%);
       width: 230px;
@@ -89,21 +89,100 @@
       background: #b3b3b3;
       cursor: default;
     }
-    /* 반응형: 700px 이하면 왼쪽 고정 해제하고 위로 */
-    @media (max-width: 700px) {
-      .school-link-box {
+    /* 오른쪽 달력+메모 박스 */
+    .right-widget-box {
+      position: absolute;
+      right: -260px;
+      top: 40%;
+      transform: translateY(-50%);
+      width: 230px;
+      background: #fff7e6;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px #ffd96644;
+      padding: 1.1rem 1rem 1.4rem 1rem;
+      font-size: 1.07rem;
+      color: #b38916;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 10;
+    }
+    .calendar {
+      width: 210px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px #f7ce8c33;
+      padding: 0.8rem 0.5rem 0.7rem 0.5rem;
+      margin-bottom: 1.1rem;
+    }
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.4rem;
+      font-weight: bold;
+      font-size: 1.02rem;
+    }
+    .calendar-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+      font-size: 0.97rem;
+    }
+    .calendar-table th, .calendar-table td {
+      padding: 0.14rem 0.3rem;
+      width: 1.7em; height: 1.7em;
+      border-radius: 4px;
+    }
+    .calendar-table td.today {
+      background: #ffd966;
+      color: #8a6500;
+      font-weight: bold;
+    }
+    .memo-area {
+      width: 100%;
+      margin-top: 0.7rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .memo-area textarea {
+      width: 100%;
+      min-height: 52px;
+      border-radius: 7px;
+      border: 1px solid #ffd966;
+      font-family: inherit;
+      font-size: 0.99rem;
+      padding: 0.5rem;
+      box-sizing: border-box;
+      resize: vertical;
+      background: #fff;
+      margin-bottom: 0.6rem;
+    }
+    .memo-area button {
+      padding: 0.47rem 0.7rem;
+      background: #b38916;
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      font-size: 0.98rem;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    /* 반응형: 900px 이하(모바일/태블릿)에서 위로 */
+    @media (max-width: 900px) {
+      .school-link-box, .right-widget-box {
         position: static;
-        left: auto;
-        top: auto;
-        transform: none;
         width: 100%;
         margin-bottom: 1.5rem;
         border-radius: 8px;
         box-shadow: none;
         padding: 1rem 0.8rem 1.1rem 0.8rem;
+        left: auto; right: auto; top: auto; transform: none;
       }
       main { padding: 1rem; min-height: auto; }
       .school-link-box input[type=text] { width: 100%; }
+      .calendar { width: 100%; }
     }
     .feature-list {
       list-style: none;
@@ -143,13 +222,23 @@
     </nav>
   </header>
   <main>
-    <!-- 대학 홈페이지 바로가기(왼쪽/작은화면에선 상단) -->
+    <!-- 왼쪽 학교 홈페이지 바로가기 (100px 더 왼쪽) -->
     <div class="school-link-box">
       <label for="schoolUrl">학교 홈페이지</label>
       <input type="text" id="schoolUrl" 
         value="https://www.seoultech.ac.kr/"
         placeholder="예: https://www.snu.ac.kr">
       <button id="goSchoolBtn">입력한 주소로 바로가기</button>
+    </div>
+    <!-- 오른쪽: 캘린더 + 메모 -->
+    <div class="right-widget-box">
+      <!-- 캘린더 -->
+      <div class="calendar" id="calendar"></div>
+      <!-- 메모 -->
+      <div class="memo-area">
+        <textarea id="memoText" placeholder="메모를 입력하세요"></textarea>
+        <button id="memoSaveBtn">메모 저장</button>
+      </div>
     </div>
     <h2>대학생 학사 생활, 한눈에!</h2>
     <p>
@@ -172,10 +261,9 @@
     </ul>
   </main>
   <script>
-    // 입력하면 버튼 활성화됨. http(s)로 시작하는지만 체크함.
+    // ----- 왼쪽 학교링크: 버튼 활성화
     const urlInput = document.getElementById('schoolUrl');
     const goBtn = document.getElementById('goSchoolBtn');
-
     function checkInput() {
       let url = urlInput.value.trim();
       if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
@@ -186,13 +274,67 @@
     }
     urlInput.addEventListener('input', checkInput);
     checkInput();
-
     goBtn.addEventListener('click', function() {
       const url = urlInput.value.trim();
       if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
         window.open(url, '_blank');
       }
     });
+
+    // ----- 오른쪽: 캘린더 위젯
+    function renderCalendar(elem, date) {
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const today = new Date();
+      const first = new Date(year, month, 1);
+      const last = new Date(year, month + 1, 0);
+      let html = '<div class="calendar-header">' +
+        `<span id="prevMonth" style="cursor:pointer;">◀</span>` +
+        `<span>${year}년 ${month + 1}월</span>` +
+        `<span id="nextMonth" style="cursor:pointer;">▶</span>` +
+        '</div><table class="calendar-table"><tr>';
+      const days = ['일','월','화','수','목','금','토'];
+      days.forEach(d => html += `<th>${d}</th>`);
+      html += '</tr><tr>';
+      for(let i=0; i<first.getDay(); i++) html += '<td></td>';
+      for(let d=1; d<=last.getDate(); d++){
+        const thisDate = new Date(year, month, d);
+        let cls = '';
+        if (
+          thisDate.getDate() === today.getDate() &&
+          thisDate.getMonth() === today.getMonth() &&
+          thisDate.getFullYear() === today.getFullYear()
+        ) {
+          cls = 'today';
+        }
+        html += `<td class="${cls}">${d}</td>`;
+        if ((first.getDay() + d) % 7 === 0) html += '</tr><tr>';
+      }
+      html += '</tr></table>';
+      elem.innerHTML = html;
+      document.getElementById('prevMonth').onclick = function(){
+        renderCalendar(elem, new Date(year, month-1, 1));
+      };
+      document.getElementById('nextMonth').onclick = function(){
+        renderCalendar(elem, new Date(year, month+1, 1));
+      };
+    }
+    renderCalendar(document.getElementById('calendar'), new Date());
+
+    // ----- 메모 저장/복원
+    const memoKey = "mainpage_memo";
+    const memoText = document.getElementById('memoText');
+    const memoSaveBtn = document.getElementById('memoSaveBtn');
+    // 복원
+    if(localStorage.getItem(memoKey)){
+      memoText.value = localStorage.getItem(memoKey);
+    }
+    // 저장
+    memoSaveBtn.onclick = function() {
+      localStorage.setItem(memoKey, memoText.value);
+      memoSaveBtn.textContent = "저장됨!";
+      setTimeout(()=>{memoSaveBtn.textContent="메모 저장";}, 1200);
+    };
   </script>
 </body>
 </html>
