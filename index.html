@@ -41,6 +41,8 @@
       border-radius: 16px;
       box-shadow: 0 4px 16px rgba(0,0,0,0.07);
       padding: 2rem;
+      position: relative;
+      min-height: 420px;
     }
     .feature-list {
       list-style: none;
@@ -52,6 +54,54 @@
       background: #eef3fa;
       border-radius: 10px;
       font-size: 1.1rem;
+    }
+    /* 왼쪽에 박스 띄우기 */
+    .school-link-box {
+      position: absolute;
+      left: -200px;
+      top: 40%;
+      transform: translateY(-50%);
+      width: 170px;
+      background: #eef3fa;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px #d1e2ff44;
+      padding: 1.1rem 1rem 1.4rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      z-index: 10;
+    }
+    .school-link-box input[type=text] {
+      padding: 0.5rem 0.4rem;
+      border-radius: 6px;
+      border: 1px solid #b7c7df;
+      margin-bottom: 0.6rem;
+      font-size: 0.97rem;
+    }
+    .school-link-box button {
+      padding: 0.5rem 0.6rem;
+      background: #004080;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.98rem;
+      font-weight: 600;
+    }
+    .school-link-box button:disabled {
+      background: #b3b3b3;
+      cursor: default;
+    }
+    @media (max-width: 900px) {
+      .school-link-box {
+        position: static;
+        width: 100%;
+        margin-bottom: 1.5rem;
+        border-radius: 8px;
+        box-shadow: none;
+        padding: 1rem 0.8rem 1.1rem 0.8rem;
+      }
+      main { min-height: auto; }
     }
     @media (max-width: 600px) {
       main { padding: 1rem; }
@@ -68,6 +118,12 @@
     </nav>
   </header>
   <main>
+    <!-- 학교 홈페이지 바로가기 기능 (왼쪽) -->
+    <div class="school-link-box">
+      <label for="schoolUrl" style="font-weight:bold; margin-bottom:5px;">학교 홈페이지</label>
+      <input type="text" id="schoolUrl" placeholder="예: https://www.snu.ac.kr">
+      <button id="goSchoolBtn" disabled>홈페이지 접속</button>
+    </div>
     <h2>대학생 학사 생활, 한눈에!</h2>
     <p>
       이 사이트는 대학생 여러분의 졸업 요건, 성적, 평균 학점 관리 등<br>
@@ -79,5 +135,26 @@
       <li><strong>학점 계산기:</strong> 과목별 학점 입력, 총 평균 학점 자동 계산</li>
     </ul>
   </main>
+  <script>
+    // 입력하면 버튼 활성화됨. http(s)로 시작하는지만 체크함.
+    const urlInput = document.getElementById('schoolUrl');
+    const goBtn = document.getElementById('goSchoolBtn');
+    urlInput.addEventListener('input', function() {
+      let url = urlInput.value.trim();
+      // https로 시작하면 버튼 켬
+      if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+        goBtn.disabled = false;
+      } else {
+        goBtn.disabled = true;
+      }
+    });
+    // 클릭하면 새 창으로 이동
+    goBtn.addEventListener('click', function() {
+      const url = urlInput.value.trim();
+      if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+        window.open(url, '_blank');
+      }
+    });
+  </script>
 </body>
 </html>
