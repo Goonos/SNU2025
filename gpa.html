@@ -2,69 +2,61 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>학점 계산기</title>
   <style>
-    body {
-      font-family: "Noto Sans KR", sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f7f9fc;
-      color: #333;
-    }
-    header {
-      background-color: #004080;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-    }
-    section {
-      padding: 2rem;
-    }
-    h2 {
-      color: #004080;
-    }
-    input, textarea {
-      margin: 0.5rem;
-    }
-    .result {
-      margin-top: 1rem;
-      font-weight: bold;
-    }
+    body { font-family: 'Noto Sans KR', sans-serif; background: #f7f9fc; margin: 0; }
+    main { max-width: 400px; margin: 3rem auto; background: white; border-radius: 12px; box-shadow: 0 2px 8px #eee; padding: 2rem; }
+    label { display: block; margin: 1rem 0 0.4rem; }
+    input[type=number] { width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ccc; }
+    button { margin-top: 1.3rem; width: 100%; background: #004080; color: white; border: none; padding: 0.8rem; font-size: 1.05rem; border-radius: 8px; cursor: pointer;}
+    .result { margin-top: 1.2rem; font-size: 1.1rem; color: #004080; font-weight: bold; }
+    .input-list { margin-bottom: 1.5rem;}
   </style>
 </head>
 <body>
-  <header>
-    <h1>대학교 가이드 사이트</h1>
-    <nav>
-      <a href="index.html">홈</a>
-      <a href="grad.html">졸업학점 계산기</a>
-      <a href="rank.html">성적 계산기</a>
-    </nav>
-  </header>
-
-  <section>
+  <main>
     <h2>학점 계산기</h2>
-    학점 입력 (예: A+ 3학점 → 4.5):<br/>
-    <textarea id="grades" rows="5" cols="40" placeholder="4.5\n4.0\n3.5..."></textarea><br/>
-    <button onclick="calcGPA()">계산</button>
-    <div class="result" id="gpaResult"></div>
-  </section>
-
+    <form id="gpaForm">
+      <div class="input-list" id="inputList">
+        <label>1번 과목 학점</label>
+        <input type="number" class="grade" step="0.01" min="0" max="4.5" required />
+      </div>
+      <button type="button" onclick="addInput()">과목 추가</button>
+      <button type="submit">평균 학점 계산</button>
+    </form>
+    <div class="result" id="result"></div>
+  </main>
   <script>
-    function calcGPA() {
-      const lines = document.getElementById("grades").value.trim().split("\n");
-      const nums = lines.map(Number).filter(n => !isNaN(n));
-
-      if (nums.length === 0) {
-        document.getElementById("gpaResult").textContent = "유효한 학점을 입력해주세요.";
+    let subjectCount = 1;
+    function addInput() {
+      subjectCount++;
+      const inputList = document.getElementById('inputList');
+      const label = document.createElement('label');
+      label.textContent = `${subjectCount}번 과목 학점`;
+      const input = document.createElement('input');
+      input.type = "number";
+      input.className = "grade";
+      input.step = "0.01";
+      input.min = "0";
+      input.max = "4.5";
+      input.required = true;
+      inputList.appendChild(label);
+      inputList.appendChild(input);
+    }
+    document.getElementById('gpaForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const grades = Array.from(document.querySelectorAll('.grade'))
+        .map(el => parseFloat(el.value))
+        .filter(v => !isNaN(v));
+      if (grades.length === 0) {
+        document.getElementById('result').innerText = '학점을 입력해 주세요.';
         return;
       }
-
-      const sum = nums.reduce((a, b) => a + b, 0);
-      const avg = sum / nums.length;
-      document.getElementById("gpaResult").textContent = `총 평균 학점: ${avg.toFixed(2)}`;
-    }
+      const sum = grades.reduce((a,b) => a+b, 0);
+      const avg = sum / grades.length;
+      document.getElementById('result').innerText =
+        `평균 학점: ${avg.toFixed(2)} (${grades.length}과목)`;
+    });
   </script>
 </body>
 </html>
