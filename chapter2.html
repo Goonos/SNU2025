@@ -1,12 +1,105 @@
-<head>
+1주차<br><br>
 
-  
-</head>
+- 인라인 스크립트<br>
+&nbsp;&nbsp;HTML 태그 안에 직접 작성하는 자바스크립트<br>
+&nbsp;&nbsp;팝업창을 열고 닫거나, 알림 메시지를 표시할 때처럼 간단한 명령을 처리할 경우 사용<br><br>
 
+- 내부 스크립트<br>
+&nbsp;&nbsp;&lt;script&gt;/&lt;/script&gt; 사이에 실행할 스크립트 소스 작성<br>
+&nbsp;&nbsp;스크립트 태그는 웹문서 모든 곳에 위치할 수 있고, 그 위치에서 바로 실행됨<br>
+&nbsp;&nbsp;한 문서 안에 여러 개의 스크립트 태그 가능<br>
+&nbsp;&nbsp;내부 스크립트는 주로 &lt;/body&gt; 앞에 사용<br><br>
 
-<body>
-  <p> 챕터2 입출력을 연습해 보겠습니다.
-  </p>
-  result =  prompt("이름을 입력하세요 : ");
-  document.write(result)
-</body>
+- 인라인, 내부 스크립트의 단점<br>
+&nbsp;&nbsp;같은 소스를 여러 웹문서에서 반복 사용하면 비효율적이고, 수정할 때도 모든 곳을 찾아서 고쳐야 함<br>
+&nbsp;&nbsp;따라서 외부 스크립트 파일을 저장하여 링크하는 것이 좋음 (모듈화)<br><br>
+
+- 외부 스크립트 연결하기<br>
+&nbsp;&nbsp;1. 확장자: .js<br>
+&nbsp;&nbsp;2. HTML 문서에서 스크립트 태그를 사용해 외부 스크립트 연결<br>
+&nbsp;&nbsp;3. &lt;script src="스크립트 파일경로"&gt;&lt;/script&gt;<br>
+&nbsp;&nbsp;4. 외부 스크립트 파일은 스크립트 태그 없이 소스만 작성<br>
+&nbsp;&nbsp;5. 보통 js 폴더를 만들어 저장하는 것이 좋음<br><br>
+
+- 연결 예시<br>
+&nbsp;&nbsp;a\\b\\c.html 에서 a\\b\\c\\d.js 연결<br>
+&nbsp;&nbsp;&lt;body&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;연결하는 방법&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;script src="c/d.js"&gt;&lt;/script&gt;<br>
+&nbsp;&nbsp;&lt;/body&gt;<br><br>
+
+- 자주 쓰는 메서드 및 함수<br>
+&nbsp;&nbsp;document.write<br>
+&nbsp;&nbsp;alert<br>
+&nbsp;&nbsp;confirm<br>
+&nbsp;&nbsp;console.log<br><br>
+
+- 입출력 방법<br>
+&nbsp;&nbsp;*경고창 alert(): alert("안녕하세요")<br>
+&nbsp;&nbsp;*확인창 confirm(): result = confirm("종료하시겠습니까?") (true 또는 false 반환)<br>
+&nbsp;&nbsp;*프롬프트 창(prompt()): result = prompt("이름을 입력하세요 :") (문자열 반환, 취소시 null)<br>
+&nbsp;&nbsp;*콘솔 로그(console.log()): 콘솔 창에 결과 출력<br><br>
+
+- 변수 사용 규칙<br>
+&nbsp;&nbsp;1. 숫자로 시작 불가, 공백 금지<br>
+&nbsp;&nbsp;2. 대소문자 구분, 보통 소문자 사용<br>
+&nbsp;&nbsp;3. 두 단어 이상 변수는 언더바(_) 또는 카멜케이스 사용<br>
+&nbsp;&nbsp;4. 예약어 사용 불가<br>
+&nbsp;&nbsp;5. 무의미한 변수명 사용 지양<br><br>
+
+- 변수 선언<br>
+&nbsp;&nbsp;let a = 0; // 재선언 불가, 재할당 가능<br>
+&nbsp;&nbsp;const a = 0; // 재선언 및 재할당 불가<br>
+&nbsp;&nbsp;var a = 0; // 재선언 및 재할당 가능, 호이스팅 있음<br><br>
+
+- 자료형<br>
+&nbsp;&nbsp;1. 원시형<br>
+&nbsp;&nbsp;&nbsp;&nbsp;- 숫자 (number)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;- 문자열 (string)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;- 논리형 (boolean, true/false)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;- NaN (Not a Number)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;- undefined<br>
+&nbsp;&nbsp;&nbsp;&nbsp;- null<br>
+&nbsp;&nbsp;2. 객체형 (배열, 객체 등)<br><br>
+
+- 자료 변환<br>
+&nbsp;&nbsp;*숫자로 변환: Number(), parseInt(), parseFloat()<br>
+&nbsp;&nbsp;*문자열로 변환: toString()<br>
+&nbsp;&nbsp;*논리형 변환: Boolean()<br><br>
+
+- 반복문 예시<br>
+&nbsp;&nbsp;for(let i=0; i<students.length; i++){ document.write(\`\${students[i]}\`)}<br>
+&nbsp;&nbsp;for(let student of students){ document.write(\`\${student}\`)}<br>
+&nbsp;&nbsp;students.forEach(student => { document.write(\`\${student}\`)});<br><br>
+
+- 객체 반복문<br>
+&nbsp;&nbsp;for(let key in subject) { document.write(\`\${key} : \${subject[key]}\`); }<br><br>
+
+- 함수 종류<br>
+&nbsp;&nbsp;*익명 함수<br>
+&nbsp;&nbsp;*즉시 실행 함수 (IIFE)<br>
+&nbsp;&nbsp;*화살표 함수<br>
+&nbsp;&nbsp;*콜백 함수<br><br>
+
+- 타이머 함수<br>
+&nbsp;&nbsp;setInterval(), clearInterval(), setTimeout(), clearTimeout()<br><br>
+
+- DOM (문서 객체 모델)<br>
+&nbsp;&nbsp;웹문서 요소들을 객체로 표현한 트리 구조<br>
+&nbsp;&nbsp;querySelector(), querySelectorAll(), getElementById() 등으로 요소 선택<br><br>
+
+- 스타일 변경 예시<br>
+&nbsp;&nbsp;element.style.color = "red";<br>
+&nbsp;&nbsp;element.style.backgroundColor = "yellow";<br><br>
+
+- 이벤트 처리<br>
+&nbsp;&nbsp;HTML 태그 내 onXXX 속성<br>
+&nbsp;&nbsp;자바스크립트로 addEventListener() 사용<br><br>
+
+- 이벤트 객체 사용 예시<br>
+&nbsp;&nbsp;document.body.addEventListener("keydown", (e) => {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;console.log(\`code: \${e.code}, key: \${e.key}\`);<br>
+&nbsp;&nbsp;});<br><br>
+
+- 노드 추가/삭제 방법<br>
+&nbsp;&nbsp;(별도 예제 참고)<br>
