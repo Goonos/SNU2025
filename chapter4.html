@@ -1,0 +1,110 @@
+*4장<br><br>
+
+괄호 안에서 선언할 때 var이나 let을 선언하지 않고 바로 변수명과 값을 선언하면 전역 함수가 됨<br><br>
+
+ex) {<br>
+&nbsp;&nbsp;hi = 1;  ===> 함수 레벨 스코프<br>
+}<br><br>
+
+*함수<br><br>
+
+함수 표현식<br>
+1. 익명 함수 -<br>
+&nbsp;&nbsp;sum(function(a,b) { return a + b })<br><br>
+
+2. 즉시 실행 함수<br>
+&nbsp;&nbsp;- 한 번만 사용하는 함수라면 선언과 동시에 실행<br>
+&nbsp;&nbsp;a. function(){abc} () - 함수 맨 끝에 () 추가<br>
+&nbsp;&nbsp;b. function(a,b) { r = a + b }(5,5) - 인자가 있을 땐 인자 추가<br><br>
+
+3. 화살표 함수 - function 대신 => 로 대체<br>
+&nbsp;&nbsp;a. let num = (a,b) => { return a + b } // 한 줄일 경우 {}와 return 생략 가능<br>
+&nbsp;&nbsp;b. let hi = () => '안녕하세요'<br>
+&nbsp;&nbsp;c. let hi = user => console.log(\`\${user}님 하이\`)("개")<br><br>
+
+4. 콜백 함수 - addEventListener()<br>
+&nbsp;&nbsp;a. a.addEventListener("OK", display) // 2번 인자는 괄호 X<br>
+&nbsp;&nbsp;b. a.addEventListener("OK", a = () => 'GOOD')<br><br>
+
+...변수 = 전개 구문 - 값만 꺼내서 펼쳐주는 구문<br><br>
+
+---
+
+fruits = ["apple", "banana", "grape"]<br>
+console.log(...fruits)<br><br>
+
+= apple, banana, grape<br>
+나머지 매개변수 - 인수가 몇 개인지 모를 때 사용<br><br>
+
+function displayFavorites(first, ...favs) {<br>
+&nbsp;&nbsp;let str = \`가장 좋아하는 과일은 \${first}군요.\`;<br>
+&nbsp;&nbsp;return str;<br>
+}<br>
+console.log(displayFavorites("사과", "포도", "마늘"));<br><br>
+
+---
+
+*타이머 함수 - 특정 시간이 되었을 때 함수 실행, ms가 기본 단위<br>
+*함수 안에 또 다른 함수가 매개변수로 사용되는 것을 콜백 함수라 한다<br><br>
+
+1. setInterval - 무한 반복<br>
+&nbsp;&nbsp;setInterval(function, 2000) = 2000ms마다 함수 실행<br>
+&nbsp;&nbsp;timer = setInterval(() => { console.log("HI") }, 2000)<br><br>
+
+2. clearInterval - setInterval 멈춤<br><br>
+
+3. setTimeout - 단발성<br><br>
+
+4. clearTimeout - 단발성<br><br>
+
+---
+
+마무리 문제 1<br><br>
+
+사용자가 프롬프트 창에 숫자를 입력했을 때 그 숫자를 함수로 넘겨주고, 함수에서는 숫자가 양수인지, 음수인지, 또는 0인지 판단해서 알림 창에 보여 주는 프로그램을 작성해 보세요.<br><br>
+
+- 양수인지<br>
+- 음수인지<br>
+- 0인지 판단하여 알림 창에 표시하는 함수 선언<br>
+- parseInt() 함수를 사용해 프롬프트 창에 입력한 내용을 숫자로 변환합니다.<br>
+- 함수는 숫자일 경우에만 실행합니다.<br><br>
+
+---
+
+2개의 숫자를 입력받아 두 수의 최대공약수를 구하는 함수를 작성하고 테스트해 보세요. 예를 들어 4와 12의 최대공약수는 4가 됩니다. 즉, 두 수 모두 나누어떨어지는 수 중에서 가장 큰 값이 최대공약수입니다.<br><br>
+
+- 주어진 두 수 중에서 어떤 수가 큰 수인지 확인합니다.<br>
+- 두 수가 모두 나누어떨어져야 하므로 두 수 중에서 큰 수까지 반복하면서 작은 수도 나누어떨어지는 수를 찾습니다.<br>
+- 찾을 때마다 변수에 할당합니다. 반복이 모두 끝나면 변수에는 가장 마지막에 할당된 약수만 남습니다.<br><br>
+
+---
+
+```javascript
+function gcd(a, b) {
+  // 절댓값 처리 (음수 입력 대비)
+  a = Math.abs(a);
+  b = Math.abs(b);
+
+  // 두 수 중 작은 값을 기준으로 공약수 찾기
+  const min = Math.min(a, b);
+  let gcd = 1; // 최대공약수 초기값
+
+  // 1부터 min까지 루프 돌며 공약수 확인
+  for (let i = 1; i <= min; i++) {
+    if (a % i === 0 && b % i === 0) {
+      gcd = i; // 더 큰 공약수를 찾을 때마다 업데이트
+    }
+  }
+
+  return gcd;
+}
+
+function lcm(a, b) {
+  // 최소공배수 = |a × b| ÷ GCD(a, b)
+  return Math.abs(a * b) / gcd(a, b);
+}
+
+// 테스트
+console.log(lcm(3, 8));  // 24
+console.log(lcm(12, 18)); // 36
+console.log(lcm(4, 12));  // 12
