@@ -7,7 +7,14 @@
     body { font-family: 'Noto Sans KR', sans-serif; background: #f7f9fc; margin: 0; }
     main { max-width: 400px; margin: 3rem auto; background: white; border-radius: 12px; box-shadow: 0 2px 8px #eee; padding: 2rem; }
     label { display: block; margin: 1.3rem 0 0.4rem; }
-    input[type=number] { width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ccc; font-size:1.06rem;}
+    input[type=number] { width: 70%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ccc; font-size:1.06rem;}
+    .grade-row { display:flex; align-items:center; gap:7px;}
+    .grade-reset-btn {
+      background:#e7e7e7; color:#222; border:none; border-radius:6px;
+      padding:0.4rem 0.7rem; margin-left:6px; cursor:pointer; font-size:0.92rem;
+      transition:background 0.2s;
+    }
+    .grade-reset-btn:hover { background:#fcdede; color:#b01b1b; }
     button[type=submit], .main-btn { margin-top: 1.3rem; width: 100%; background: #004080; color: white; border: none; padding: 0.8rem; font-size: 1.05rem; border-radius: 8px; cursor: pointer;}
     .main-btn { width:auto; margin-top:0; margin-bottom:1.5rem; padding:0.6rem 1.4rem; font-weight:600; font-size:1.02rem; }
     .result { margin-top: 1.2rem; font-size: 1.1rem; color: #004080; font-weight: bold; }
@@ -17,24 +24,36 @@
 </head>
 <body>
   <main>
-    <button class="main-btn" onclick="location.href='main.html'">홈으로</button>
+    <button class="main-btn" onclick="location.href='https://goonos.github.io/SNU2025/index.html'">홈으로</button>
     <h2>학점 계산기</h2>
     <form id="gpaForm">
       <div class="grade-section">
         <label for="grade1">1학년 평균 학점</label>
-        <input type="number" step="0.01" min="0" max="4.5" id="grade1" class="grade" required>
+        <div class="grade-row">
+          <input type="number" step="0.01" min="0" max="4.5" id="grade1" class="grade" required>
+          <button type="button" class="grade-reset-btn" data-grade="1">리셋</button>
+        </div>
       </div>
       <div class="grade-section">
         <label for="grade2">2학년 평균 학점</label>
-        <input type="number" step="0.01" min="0" max="4.5" id="grade2" class="grade" required>
+        <div class="grade-row">
+          <input type="number" step="0.01" min="0" max="4.5" id="grade2" class="grade" required>
+          <button type="button" class="grade-reset-btn" data-grade="2">리셋</button>
+        </div>
       </div>
       <div class="grade-section">
         <label for="grade3">3학년 평균 학점</label>
-        <input type="number" step="0.01" min="0" max="4.5" id="grade3" class="grade" required>
+        <div class="grade-row">
+          <input type="number" step="0.01" min="0" max="4.5" id="grade3" class="grade" required>
+          <button type="button" class="grade-reset-btn" data-grade="3">리셋</button>
+        </div>
       </div>
       <div class="grade-section">
         <label for="grade4">4학년 평균 학점</label>
-        <input type="number" step="0.01" min="0" max="4.5" id="grade4" class="grade" required>
+        <div class="grade-row">
+          <input type="number" step="0.01" min="0" max="4.5" id="grade4" class="grade" required>
+          <button type="button" class="grade-reset-btn" data-grade="4">리셋</button>
+        </div>
       </div>
       <button type="submit">평균 학점 계산</button>
     </form>
@@ -52,6 +71,14 @@
     document.querySelectorAll('.grade').forEach(function(input, idx){
       input.addEventListener('input', function() {
         localStorage.setItem('grade'+(idx+1), input.value);
+      });
+    });
+    // 리셋버튼
+    document.querySelectorAll('.grade-reset-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        const idx = btn.getAttribute('data-grade');
+        localStorage.removeItem('grade'+idx);
+        document.getElementById('grade'+idx).value = '';
       });
     });
     // 계산
@@ -72,7 +99,6 @@
         `전체 평균 학점: ${avg.toFixed(2)}`;
     });
 
-    // 페이지 로드될 때 값 채움
     loadGrades();
   </script>
 </body>
