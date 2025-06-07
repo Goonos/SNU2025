@@ -118,12 +118,14 @@
     </nav>
   </header>
   <main>
-    <!-- 학교 홈페이지 바로가기 기능 (왼쪽) -->
-    <div class="school-link-box">
-      <label for="schoolUrl" style="font-weight:bold; margin-bottom:5px;">학교 홈페이지</label>
-      <input type="text" id="schoolUrl" placeholder="예: https://www.snu.ac.kr">
-      <button id="goSchoolBtn" disabled>홈페이지 접속</button>
-    </div>
+  <!-- 학교 홈페이지 바로가기 (왼쪽) -->
+<div class="school-link-box">
+  <label for="schoolUrl" style="font-weight:bold; margin-bottom:5px;">학교 홈페이지</label>
+  <input type="text" id="schoolUrl" 
+    value="https://www.seoultech.ac.kr/"
+    placeholder="예: https://www.snu.ac.kr">
+  <button id="goSchoolBtn">서울과학기술대학교 홈페이지 접속</button>
+</div>
     <h2>대학생 학사 생활, 한눈에!</h2>
     <p>
       이 사이트는 대학생 여러분의 졸업 요건, 성적, 평균 학점 관리 등<br>
@@ -135,26 +137,31 @@
       <li><strong>학점 계산기:</strong> 과목별 학점 입력, 총 평균 학점 자동 계산</li>
     </ul>
   </main>
-  <script>
-    // 입력하면 버튼 활성화됨. http(s)로 시작하는지만 체크함.
-    const urlInput = document.getElementById('schoolUrl');
-    const goBtn = document.getElementById('goSchoolBtn');
-    urlInput.addEventListener('input', function() {
-      let url = urlInput.value.trim();
-      // https로 시작하면 버튼 켬
-      if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
-        goBtn.disabled = false;
-      } else {
-        goBtn.disabled = true;
-      }
-    });
-    // 클릭하면 새 창으로 이동
-    goBtn.addEventListener('click', function() {
-      const url = urlInput.value.trim();
-      if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
-        window.open(url, '_blank');
-      }
-    });
-  </script>
+ <script>
+  const urlInput = document.getElementById('schoolUrl');
+  const goBtn = document.getElementById('goSchoolBtn');
+
+  // 페이지 열자마자 값이 있으니까 버튼 활성화(비활성화 필요 없음)
+  // 만약 url이 없으면 버튼 비활성화
+  function checkInput() {
+    let url = urlInput.value.trim();
+    // http로 시작해야 함
+    if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+      goBtn.disabled = false;
+    } else {
+      goBtn.disabled = true;
+    }
+  }
+  urlInput.addEventListener('input', checkInput);
+  checkInput(); // 처음 로딩시에도 체크
+
+  // 클릭하면 새 창으로 이동
+  goBtn.addEventListener('click', function() {
+    const url = urlInput.value.trim();
+    if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+      window.open(url, '_blank');
+    }
+  });
+</script>
 </body>
 </html>
