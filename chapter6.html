@@ -1,0 +1,101 @@
+6장<br><br>
+
+- 이벤트란<br>
+웹브라우저 내에서 사용자가 실행하는 어떤 동작 / 브라우저 내에서만 한함<br>
+이벤트가 발생하면 그에 따른 연결 동작이 있어야 하며<br>
+처리하려면 이벤트 처리기 또는 이벤트 핸들러가 있어야 한다.<br><br>
+
+- 주요 이벤트 종류 및 기능<br>
+click: 사용자가 HTML 요소를 클릭했을 때 이벤트 발생<br>
+dblclick: 사용자가 HTML 요소를 더블클릭했을 때 이벤트 발생<br>
+mousedown: 사용자가 요소에서 마우스 버튼을 눌렀을 때 이벤트 발생<br>
+mousemove: 사용자가 요소에서 마우스 포인터를 움직일 때 이벤트 발생<br>
+mouseover: 마우스 포인터가 요소 위로 올라갈 때 이벤트 발생<br>
+mouseout: 마우스 포인터가 요소를 벗어날 때 이벤트 발생<br>
+mouseup: 요소 위에 놓인 마우스 버튼에서 손을 뗄 때 이벤트 발생<br><br>
+
+- 키보드 이벤트 종류 및 기능<br>
+keydown: 키를 누르는 동안 이벤트 발생<br>
+keypress: 키를 눌렀을 때 이벤트 발생<br>
+keyup: 키에서 손을 뗄 때 이벤트 발생<br><br>
+
+- 폼 관련 이벤트 종류 및 기능<br>
+blur: 폼 요소에 포커스를 잃었을 때 이벤트 발생<br>
+change: 목록이나 체크 상태 등이 변경되었을 때 이벤트 발생<br>
+focus: 폼 요소에 포커스를 얻었을 때 이벤트 발생<br>
+reset: 폼이 리셋되었을 때 이벤트 발생<br>
+submit: 제출 버튼 클릭 시 이벤트 발생<br><br>
+
+---
+
+연결 방법<br><br>
+
+1. HTML 태그에 연결하기<br>
+&lt;button onclick="alert('클릭!')"&gt;Click&lt;/button&gt;<br><br>
+
+2. 웹 요소에 함수 연결하기<br>
+
+const button = document.querySelector("button");<br>
+button.onclick = function() {<br>
+&nbsp;&nbsp;document.body.style.backgroundColor = "green";<br>
+};<br><br>
+
+3. addEventListener("이벤트", 함수, 캡처 여부)<br>
+- 캡처: true (캡처), false (버블)<br>
+- 사용 이유: 이벤트 객체를 진행할 때 어떤 이벤트를 가져왔는지 알 수 있음<br>
+- 버블일 경우 이벤트가 들어올 경우 모든 경로(바디, div 등 모든 이벤트가 실행(전파)됨)<br>
+- 캡처는 모든 단에 하나씩 다 실행<br><br>
+
+---
+
+이벤트가 발생하면 해당 이벤트와 관련된 정보는 event 객체에 담긴다.<br>
+이벤트 전파와 관련이 있는 프로퍼티는 target 프로퍼티와 currentTarget 프로퍼티<br>
+- target: 이벤트가 처음 발생한 요소<br>
+- currentTarget: 이벤트가 전파된 현재 요소<br><br>
+
+이벤트가 전파된다?<br>
+- 웹 요소에서 이벤트가 발생했을 때 해당 요소에서만 이벤트가 처리되는 것이 아니라<br>
+해당 요소를 감싸고 있는 부모 요소, 그리고 그 요소의 부모 요소에서도 똑같이 이벤트가 처리된다.<br>
+- 이것을 이벤트 전파라고 한다.<br>
+- 이벤트 버블링과 이벤트 캡처링 두 가지 형태가 있다.<br><br>
+
+이벤트 리스너를 사용할 때 이벤트 전파 방식을 지정할 수 있다.<br>
+요소.addEventListener(이벤트, 함수, 캡처 여부)<br>
+캡처 여부: 이벤트를 캡처링하는지의 여부를 지정한다.<br><br>
+
+---
+
+이벤트 객체<br><br>
+
+event 객체의 메서드<br>
+메서드: preventDefault<br>
+기능: (취소할 수 있을 경우) 기본 동작을 취소한다.<br><br>
+
+event 객체의 프로퍼티<br>
+altKey: 이벤트가 발생했을 때 Alt 키를 누르고 있었는지 여부를 확인하고 Boolean 값을 반환<br>
+button: 마우스 키를 반환<br>
+charCode: keypress 이벤트가 발생했을 때 어떤 키가 눌렸는지 유니코드 값으로 반환<br>
+clientX: 이벤트가 발생한 가로 위치 반환<br>
+clientY: 이벤트 발생한 세로 위치 반환<br>
+ctrlKey: 이벤트가 발생했을 때 Ctrl 키를 누르고 있었는지 여부를 확인하고 Boolean 값을 반환<br>
+pageX: 현재 문서를 기준으로 이벤트가 발생한 가로 위치 반환<br>
+pageY: 현재 문서를 기준으로 이벤트가 발생한 세로 위치 반환<br>
+screenX: 현재 화면을 기준으로 이벤트가 발생한 가로 위치 반환<br>
+screenY: 현재 화면을 기준으로 이벤트가 발생한 세로 위치 반환<br>
+shiftKey: 이벤트가 발생했을 때 Shift 키를 누르고 있었는지 여부를 확인하고 Boolean 값을 반환<br>
+target: 이벤트가 발생한 대상 반환<br>
+timeStamp: 이벤트가 발생한 시간을 밀리초 단위로 반환<br>
+type: 발생한 이벤트 이름 반환<br>
+which: 키보드 관련된 이벤트가 발생했을 때 키의 유니코드 값을 반환<br><br>
+
+키보드와 관련된 프로퍼티<br>
+- event.code : 키코드<br>
+- event.key : 키 이름<br><br>
+
+예시 코드<br>
+const body = document.body;<br>
+const result = document.querySelector("#resulr");<br><br>
+
+body.addEventListener("keydown", (e) => {<br>
+&nbsp;&nbsp;result.innerText = \`code : \${e.code}, key : \${e.key}\`<br>
+});<br>
