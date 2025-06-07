@@ -44,7 +44,6 @@
       position: relative;
       min-height: 420px;
     }
-    /* 왼쪽 학교링크: 기존보다 100px 더 왼쪽 */
     .school-link-box {
       position: absolute;
       left: -360px;
@@ -176,7 +175,6 @@
       cursor: pointer;
       font-weight: 600;
     }
-    /* 반응형: 900px 이하(모바일/태블릿)에서 위로 */
     @media (max-width: 900px) {
       .school-link-box, .right-widget-box {
         position: static;
@@ -229,7 +227,6 @@
     </nav>
   </header>
   <main>
-    <!-- 왼쪽 학교 홈페이지 바로가기 (100px 더 왼쪽) -->
     <div class="school-link-box">
       <label for="schoolUrl">학교 홈페이지</label>
       <input type="text" id="schoolUrl" 
@@ -237,7 +234,6 @@
         placeholder="예: https://www.snu.ac.kr">
       <button id="goSchoolBtn">입력한 주소로 바로가기</button>
     </div>
-    <!-- 오른쪽: 캘린더 + 메모 (100px 더 오른쪽, 아래로 200px 더 내려감) -->
     <div class="right-widget-box">
       <!-- 캘린더 -->
       <div class="calendar" id="calendar"></div>
@@ -268,7 +264,6 @@
     </ul>
   </main>
   <script>
-    // ----- 왼쪽 학교링크: 버튼 활성화
     const urlInput = document.getElementById('schoolUrl');
     const goBtn = document.getElementById('goSchoolBtn');
     function checkInput() {
