@@ -1,4 +1,36 @@
-<h1>Chapter 1 </h1>
+1주차<br><br>
 
-<p> 외부 파일 가져오기 </p>
-<img src="pic.png">
+- 인라인 스크립트<br>
+&nbsp;&nbsp;HTML 태그 안에 직접 작성하는 자바스크립트<br>
+&nbsp;&nbsp;팝업창을 열고 닫거나, 알림 메시지를 표시할 때처럼 간단한 명령을 처리할 경우 사용<br><br>
+
+- 내부 스크립트<br>
+&nbsp;&nbsp;&lt;script&gt;/&lt;/script&gt; 사이에 실행할 스크립트 소스 작성<br>
+&nbsp;&nbsp;스크립트 태그는 웹문서 모든 곳에 위치할 수 있고, 그 위치에서 바로 실행됨<br>
+&nbsp;&nbsp;한 문서 안에 여러 개의 스크립트 태그 가능<br>
+&nbsp;&nbsp;내부 스크립트는 주로 &lt;/body&gt; 앞에 사용<br><br>
+
+- 인라인, 내부 스크립트의 단점<br>
+&nbsp;&nbsp;모두 내부에서 스크립트를 작성하기 때문에 같은 소스를 여러 웹문서에서 사용할 경우<br>
+&nbsp;&nbsp;같은 소스를 반복해야 하므로 비효율적<br>
+&nbsp;&nbsp;또한 수정하려면 모든 곳을 찾아서 수정해야 함<br>
+&nbsp;&nbsp;따라서 외부 스크립트 파일을 저장하여 링크하는 것이 좋음 (모듈화)<br><br>
+
+- 외부 스크립트 연결하기<br>
+&nbsp;&nbsp;1. 확장자: .js<br>
+&nbsp;&nbsp;2. HTML 문서에서 스크립트 태그를 사용해서 외부 스크립트 연결<br>
+&nbsp;&nbsp;3. &lt;script src="스크립트 파일경로"&gt;&lt;/script&gt;<br>
+&nbsp;&nbsp;4. 외부 스크립트 파일에는 스크립트 태그 없이 소스만 작성<br>
+&nbsp;&nbsp;5. 보통 js 폴더를 만들어 저장하는 것이 좋음<br><br>
+
+- 연결 예시<br>
+&nbsp;&nbsp;a\\b\\c.html 에서 a\\b\\c\\d.js 연결하기<br>
+&nbsp;&nbsp;&lt;body&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;연결하는 방법&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;script src="c/d.js"&gt;&lt;/script&gt;<br>
+&nbsp;&nbsp;&lt;/body&gt;<br><br>
+
+- 자주 쓰는 메서드 및 함수<br>
+&nbsp;&nbsp;document.write<br>
+&nbsp;&nbsp;alert<br>
+&nbsp;&nbsp;confirm<br>
