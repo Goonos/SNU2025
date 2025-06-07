@@ -1,0 +1,110 @@
+5장<br>
+동적으로 반응하게 하는 것<br>
+자바스크립트를 이용해 웹문서에 접근할 수 있도록 객체를 사용하여 체계적으로 정리하는 방법<br><br>
+
+DOM 트리 - 요소를 부모와 자식 관계로 계층 구조로 만듦, 역 나무 형태<br><br>
+
+DOM에 접근하기<br>
+getElementBy~ 함수 - id나 class 등 태그명을 사용해 직접 접근<br>
+여러 개를 가져오는 건 (클래스네임, 태그명 등) getElementsBy~ 사용<br><br>
+
+(구식)<br>
+- getElementById("id")<br>
+- getElementsByClassName("클래스명")<br>
+- getElementsByTagName("태그명")<br><br>
+
+요즘엔 셀렉터 사용<br>
+querySelector() - 무조건 document를 사용해야 함<br>
+1. # 사용 시 id 값 입력<br>
+2. . 입력 시 .classname (클래스명)<br>
+3. 태그명<br><br>
+
+ex)<br>
+document.querySelector("#id")<br>
+document.querySelector(".class") - 상단 1개<br>
+document.querySelectorAll(".class") - 모든 클래스 내용<br>
+document.querySelector("tag")<br><br>
+
+---
+
+웹 요소 내용 가져오기 및 수정하기<br>
+접근한 요소의 텍스트 내용을 가져오거나 지정할 때는 innerText, innerHTML, textContent 프로퍼티 사용<br><br>
+
+- innerText: 순수 텍스트를 가져오거나, 해당 요소에 텍스트 지정<br>
+- innerHTML: 태그와 텍스트를 가져오거나, 태그와 함께 텍스트 지정<br>
+- textContent: 텍스트를 가져오되 화면에 보이는 대로가 아니라 숨겨진 텍스트까지 포함 (화면에서 감춘 요소에서도 모두 가져옴)<br><br>
+
+예시<br>
+document.querySelector("tag").innerText = "modi" // 태그 변경<br>
+document.querySelector("#id").textContent // 숨겨진 것도 모두 조회<br>
+document.querySelector("#id").innerHTML // 태그까지 모두 조회<br><br>
+
+---
+
+**스타일 보기/수정하기**<br>
+CSS 속성에 접근하기<br>
+요소.style.속성명<br><br>
+
+예시<br>
+document.querySelector("tag").style.color = "red"<br>
+document.querySelector("tag").style.backgroundColor = "yellow"<br><br>
+
+---
+
+(예) 클릭해서 텍스트 내용 또는 이미지 바꾸기<br><br>
+
+2) 제목 부분 클릭했을 때 변경하기<br>
+click 이벤트가 발생했을 때, 요소에 직접 함수를 연결해서 사용<br><br>
+
+const title = document.querySelector("#title");<br>
+title.onclick = function() {<br>
+&nbsp;&nbsp;title.innerText = "프로필";<br>
+}<br><br>
+
+const title = document.querySelector("#id")<br>
+const pfimg = document.querySelector("#pfimg")<br><br>
+
+title.onclick = () => { title.innerText = "change" }<br>
+pfimg.onclick = () => { pfimg.src = "images/pf2.png" }<br><br>
+
+---
+
+DOM에서 폼 다루기<br><br>
+
+- id를 사용해 접근하기<br>
+document.querySelector("#name").value // 입력된 값 가져오기<br>
+document.querySelector("#name").value = "K" // 값 입력<br><br>
+
+document.querySelector("#major").options // 옵션 항목 조회<br>
+selectedIndex = 3 // 3번째 옵션 선택됨<br><br>
+
+let select = document.querySelector("#major") // 코드가 길어져 축소<br>
+select.options[select.options.selectedIndex].innerText<br><br>
+
+폼을 배열로 필드에 접근법 (id, class, name 속성 없음)<br><br>
+
+- 네임이 여러 개일 땐<br>
+document.testForm.subject // 라디오 버튼의 값 확인 (단일 선택)<br>
+document.testForm.mailing // 체크박스는 밸류값 확인 안됨<br><br>
+
+체크박스 확인 방법<br>
+document.querySelectorAll("input[name='mailing']:checked")<br><br>
+
+라디오버튼과 체크박스 모두 그룹으로 묶으며<br>
+라디오버튼은 하나를 체크하면 하나가 풀림<br>
+checked - true(체크됨), false(체크풀림)으로 확인<br>
+체크박스는 다중 선택 가능하므로 querySelectorAll() 사용<br><br>
+
+---
+
+(예) 선택한 항목 화면에 표시하기<br><br>
+
+1) 선택 목록을 가져와 변수에 저장하고<br>
+2) 옵션의 selectedIndex를 확인한 후<br>
+3) 그 인덱스 값을 가진 옵션 항목의 내용을 가져온다<br><br>
+
+const selectMenu = document.querySelector("#major");<br>
+selectMenu.onchange = () => {<br>
+&nbsp;&nbsp;let selectedText = selectMenu.options[selectMenu.selectedIndex].innerText;<br>
+&nbsp;&nbsp;alert(\`\${selectedText}를 선택했습니다.\`);<br>
+}<br>
