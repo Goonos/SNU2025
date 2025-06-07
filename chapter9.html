@@ -1,98 +1,106 @@
-9주차(8장)
-	<mark style="background: #FF5582A6;">내장객체</mark>
-	 내장객체란 사용자가 가져다 쓸 수 있도록 미리 만들어진 객체
-	 가장먼저 [[Window객체|Window객체]](최상위)가 만들어짐
-	<mark style="background: #FF5582A6;">Window객체의 매서드</mark>
-	1.  <mark style="background: #ABF7F7A6;">window.open("경로","창이름" ,"옵션")</mark>
-		경로 - 팝업창에 표시할 문서나 사이트의 경로:URL
-		창이름 - 팝업창의 이름, 미지정시 팝업창이 계속 새로 나타남
-		창옵션 - left, top 속성을 이용해 위치를 정하거나 width, height속성으로 크기를 지정, 미지정시 팝업은 왼쪽 상단에 나타남
-		ex)
-		function openPopup() {
-		window.open("a.html" , "이벤트팝업" , "width=600 height=500 left=300 top=200")}
-		const bttn = document.querySelector("button");
-		bttn.onclick = openPopup;
-		Q.화면너비 1000,600 이고 팝업의 크기가 600.400일때 팝업을 화면에 가운데로 하는 함수는?
-		A.window.open("a.html", "이벤트팝업" , "width=600 height=400 left=200 top=100")
-	2. <mark style="background: #ABF7F7A6;">window.close()</mark>
-		열려있는 브라우저 창을 닫는 함수
-		ex)
-		<.button onclick = "window.close()">닫기</button>
-	3. screen 객체
-		screen.availWidth - 스크린의 가로 가동범위
-		screen.availHeight - 스크린의 세로 가동범위.
-	4. history 객체
-		history.back() - 이전페이지
-		history.forward() - 다음페이지
-		history.go(1) -> 다음페이지, go(-1) -> 이전페이지
-	5. location 객체 
-		location.assign("https://example.com"); - 링크로 접속
-			location.reload(); - 새로고침 
-	<mark style="background: #FF5582A6;">Date 객체 매서드 - 날짜관련 객체</mark>
-	사용하려면 새로운 객체를 만든후 식별자를 붙혀 사용한다 그것을 인스턴스라 한다
-	let today = new Date() // 단 객체를 생성할때의 시간을 말함
-	console.log(today) ->
-	today.getDate() -> 객체가 생성되었을때의 날짜(일)를 가져옴 
-	 실습
-		 1. <mark style="background: #ABF7F7A6;">두 날짜사이 흐른 시간을 계산하기</mark>
-			const result = document.querySelector("#result");  - 결과값을 표시할 DOM 요소를 찾고 result 변수에 할당
-			const firstDay = new Date("2021-07-01");  - 시작 날짜를 나타내는 Date 객체를 생성하여 firstDay에 할당
-			const today = new Date();  - 현재 날짜·시간을 나타내는 Date 객체를 생성하여 today에 할당
-			let passedTime = today.getTime() - firstDay.getTime();  - 시작일로부터 현재까지 경과된 시간(밀리초) 계산하여 passedTime에 할당
-			let passedDay = Math.round(passedTime / (1000 * 60 * 60 * 24));  - 밀리초 단위의 passedTime을 일 단위로 환산하여 반올림 후 passedDay에 할당
-			result.innerText = passedDay;  - 계산된 일 수(passedDay)를 result 요소의 텍스트로 설정
-		2. <mark style="background: #ABF7F7A6;">디지털 시계 만들기</mark>
-			const displayDate = document.querySelector('#today');  - '#today' 요소를 찾아 displayDate 변수에 할당
-			const year = today.getFullYear();  - today에서 연도를 가져와 year에 할당
-			const month = today.getMonth() + 1;  - today에서 월(0~11)을 가져와 +1하여 month에 할당
-			const date = today.getDate();  - today에서 날짜를 가져와 date에 할당
-			const day1 = today.getDay();  - today에서 요일(0~6)을 가져와 day1에 할당
-			let day2 = '';  - 요일명 저장용 빈 문자열을 day2에 할당
-			switch(day1) {  - day1 값에 따라 요일명을 분기 처리 시작
-			  case 0: day2 = '일요일'; break;  - day1이 0이면 day2에 '일요일' 할당 후 분기 종료
-			  case 1: day2 = '월요일'; break;  - 1이면 '월요일'
-			  case 2: day2 = '화요일'; break;  - 2이면 '화요일'
-			  case 3: day2 = '수요일'; break;  - 3이면 '수요일'
-			  case 4: day2 = '목요일'; break;  - 4이면 '목요일'
-			  case 5: day2 = '금요일'; break;  - 5이면 '금요일'
-			  case 6: day2 = '토요일'; break;  - 6이면 '토요일'
-			}
-			displayDate.innerHTML = `${year}년 ${month}월 ${date}일 <span style='font-weight:bold'>${day2}</span>`;  - 년·월·일과 요일명(day2)을 포맷팅하여 displayDate 요소의 HTML로 설정
-			const displayTime = document.querySelector("#clock");  - #.clock 요소를 찾아    displayTime 변수에 할당
-			let clock = () => {  - clock이라는 이름의 화살표 함수 선언
-			let current = new Date();  - 현재 날짜·시간을 가지는 Date 객체 인스턴스를 current에 할당
-			let hrs = current.getHours();  - current에서 시 값을 가져와 hrs에 할당
-			let mins = current.getMinutes();  - current에서 분 값을 가져와 mins에 할당
-			let secs = current.getSeconds();  - current에서 초 값을 가져와 secs에 할당
-			let period = "AM";  - period 변수에 문자열 "AM"을 초기값으로 할당
-			if (hrs === 0) { hrs = 12; }  - 만약 시 값이 0이면 12로 바꾸어 12시로 표시
-			else if (hrs > 12) { hrs = hrs - 12; period = "PM"; }  - 시가 12 이상이면 12를 빼서 12시간제 변환, period를 "PM"으로 설정
-			hrs = (hrs < 10) ? "0" + hrs : hrs;  - 시가 10 미만이면 앞에 "0"을 붙여 두 자리로 만듦
-			mins = (mins < 10) ? "0" + mins : mins;  - 분이 10 미만이면 앞에 "0"을 붙여 두 자리로 만듦
-			secs = (secs < 10) ? "0" + secs : secs;  - 초가 10 미만이면 앞에 "0"을 붙여 두 자리로 만듦
-			displayTime.innerText = `${period} ${hrs}:${mins}:${secs}`;  - 템플릿 리터럴을 사용해 "AM/PM hh:mm:ss" 형식 문자열을 displayTime 요소의 텍스트로 설정
-			 }
-			setInterval(clock, 1000);  - clock 함수를 1000밀리초(1초) 간격으로 반복 호출
-	<mark style="background: #FF5582A6;"> Math 객체</mark>
-	Math.abs(x) - 절댓값
-	Math.cbrt(x) - 세제곱근
-	Math.ceil(x) - 올림
-	Math.floor(x) - 내림
-	Math.round(x) - 반올림
-	Math.random(x) - 0과 1사이 무작위 난수
-	(Number객체의 소숫점 표현)
-	숫자.toFixed(자릿수)
-	실습
-		-  <mark style="background: #ABF7F7A6;">반지름 10 원둘레 넓이 구하기</mark>
-		radius = 10
-		2 * Math.PI(3.14) * radius - 원 둘레 = 2파이R
-		Math.PI * radius *  radius - 원 넓이 = 파이 R 제곱
-		-  <mark style="background: #ABF7F7A6;">1~100사이 랜덤 구하기</mark>
-			Math.floor(Math.random() *100 +1)
-		-  <mark style="background: #ABF7F7A6;">1-5의 랜덤 이미지 가져오기</mark>
-		function changeBg() {  – changeBg라는 함수를 선언해 배경 변경 로직을 묶음  
-		const bgCount = 5;  – 사용할 배경 이미지 개수(5개)를 상수로 정의  
-		let randomNumber = Math.floor(Math.random() * bgCount) + 1;  – 1~5 범위 정수를 랜덤 생성  
-		document.body.style.backgroundImage = `url(images/bg-${randomNumber}.jpg)`;  – 랜덤 이미지로 <.body> 배경 설정  
-		}  – changeBg 함수 정의 끝  
-		document.addEventListener("load", changeBg());  – 페이지 로드 시 changeBg() 실행 등록 
+// Window 객체 관련 함수
+function openPopupCenter() {
+  const screenWidth = 1000;
+  const screenHeight = 600;
+  const popupWidth = 600;
+  const popupHeight = 400;
+  const left = (screenWidth - popupWidth) / 2;
+  const top = (screenHeight - popupHeight) / 2;
+  window.open("a.html", "이벤트팝업", `width=${popupWidth} height=${popupHeight} left=${left} top=${top}`);
+}
+
+function closeWindow() {
+  window.close();
+}
+
+// screen 객체 속성
+const availableWidth = screen.availWidth;
+const availableHeight = screen.availHeight;
+
+// history 객체 메서드
+function goBack() {
+  history.back();
+}
+
+function goForward() {
+  history.forward();
+}
+
+function goStep(step) {
+  history.go(step);
+}
+
+// location 객체 메서드
+function redirect(url) {
+  location.assign(url);
+}
+
+function reloadPage() {
+  location.reload();
+}
+
+// Date 객체 사용 예시
+const today = new Date();
+
+function getDaysPassed(startDateStr) {
+  const firstDay = new Date(startDateStr);
+  const now = new Date();
+  const passedTime = now.getTime() - firstDay.getTime();
+  const passedDays = Math.round(passedTime / (1000 * 60 * 60 * 24));
+  return passedDays;
+}
+
+function displayCurrentDate() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+  const date = now.getDate();
+  const dayIndex = now.getDay();
+  const days = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+  const dayName = days[dayIndex];
+  return `${year}년 ${month}월 ${date}일 ${dayName}`;
+}
+
+function startDigitalClock(element) {
+  function clock() {
+    const now = new Date();
+    let hrs = now.getHours();
+    let mins = now.getMinutes();
+    let secs = now.getSeconds();
+    let period = "AM";
+
+    if (hrs === 0) {
+      hrs = 12;
+    } else if (hrs > 12) {
+      hrs -= 12;
+      period = "PM";
+    }
+
+    hrs = hrs < 10 ? "0" + hrs : hrs;
+    mins = mins < 10 ? "0" + mins : mins;
+    secs = secs < 10 ? "0" + secs : secs;
+
+    element.innerText = `${period} ${hrs}:${mins}:${secs}`;
+  }
+  clock();
+  setInterval(clock, 1000);
+}
+
+// Math 객체 사용 예시
+function calculateCircle(radius) {
+  const circumference = 2 * Math.PI * radius;
+  const area = Math.PI * radius * radius;
+  return { circumference, area };
+}
+
+function randomBetween(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function changeBackgroundImage() {
+  const bgCount = 5;
+  const randomNumber = Math.floor(Math.random() * bgCount) + 1;
+  document.body.style.backgroundImage = `url(images/bg-${randomNumber}.jpg)`;
+}
+
+document.addEventListener("load", changeBackgroundImage());
