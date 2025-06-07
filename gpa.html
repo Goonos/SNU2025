@@ -8,69 +8,128 @@
     main { max-width: 480px; margin: 3rem auto; background: white; border-radius: 12px; box-shadow: 0 2px 8px #eee; padding: 2rem; }
     .main-btn { width:auto; margin-bottom:1.5rem; padding:0.6rem 1.4rem; font-weight:600; font-size:1.02rem; background:#004080; color:#fff; border:none; border-radius:7px; cursor:pointer;}
     .year-section { background:#f6f9fe; border-radius:9px; padding:1.1rem 1rem; margin-bottom:1.7rem;}
-    .year-title { font-size:1.1rem; font-weight:600; margin-bottom:0.9rem;}
-    .grade-list { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px;}
-    .grade-list input[type=number] { width:74px; padding:0.4rem 0.3rem; border-radius:6px; border:1px solid #ccc; font-size:1.05rem;}
-    .add-btn, .avg-btn { background:#406eab; color:#fff; border:none; border-radius:6px; padding:0.42rem 0.9rem; cursor:pointer; font-size:0.96rem; margin-right:8px;}
-    .avg-btn { background:#004080; margin-right:0;}
+    .year-title {
+      font-size:1.1rem; font-weight:600; margin-bottom:0.9rem;
+      text-align: center;
+    }
+    .grade-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      max-width: 260px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .grade-list input[type=number] {
+      width: 70px;
+      padding: 0.4rem 0.3rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1.05rem;
+      text-align: center;
+    }
+    .button-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 7px;
+    }
+    .add-btn, .avg-btn {
+      background: #406eab;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.42rem 0.9rem;
+      cursor: pointer;
+      font-size: 0.96rem;
+    }
+    .avg-btn { background:#004080; }
     .add-btn:hover { background:#406ef7;}
     .avg-btn:hover { background:#002855;}
-    .result { margin-top: 0.8rem; font-size:1.1rem; color: #004080; font-weight: bold; min-height:1.3em;}
-    .grade-list input[type=number]:last-child {margin-right:0;}
+    .reset-row {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 6px;
+    }
     .grade-reset-btn {
       background:#e7e7e7; color:#222; border:none; border-radius:6px;
-      padding:0.37rem 0.85rem; margin-left:5px; cursor:pointer; font-size:0.91rem;
+      padding:0.37rem 0.85rem; cursor:pointer; font-size:0.91rem;
       transition:background 0.2s;
-      margin-bottom:6px;
     }
     .grade-reset-btn:hover { background:#fcdede; color:#b01b1b; }
+    .result {
+      margin-top: 0.8rem;
+      font-size: 1.1rem;
+      color: #004080;
+      font-weight: bold;
+      min-height: 1.3em;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
   <main>
-    <button class="main-btn" onclick="location.href='main.html'">홈으로</button>
+    <button class="main-btn" onclick="location.href='https://goonos.github.io/SNU2025/index.html'">홈으로</button>
     <h2>학점 계산기</h2>
     <form id="gpaForm">
       <!-- 1학년 -->
       <div class="year-section" data-year="1">
         <div class="year-title">1학년</div>
         <div class="grade-list" id="grade-list-1"></div>
-        <button type="button" class="add-btn" data-year="1">학점추가</button>
-        <button type="button" class="grade-reset-btn" data-year="1">리셋</button>
-        <button type="button" class="avg-btn" data-year="1">평균 학점 계산</button>
+        <div class="button-row">
+          <button type="button" class="add-btn" data-year="1">학점추가</button>
+          <button type="button" class="avg-btn" data-year="1">평균학점 계산</button>
+        </div>
+        <div class="reset-row">
+          <button type="button" class="grade-reset-btn" data-year="1">리셋</button>
+        </div>
         <div class="result" id="result-1"></div>
       </div>
       <!-- 2학년 -->
       <div class="year-section" data-year="2">
         <div class="year-title">2학년</div>
         <div class="grade-list" id="grade-list-2"></div>
-        <button type="button" class="add-btn" data-year="2">학점추가</button>
-        <button type="button" class="grade-reset-btn" data-year="2">리셋</button>
-        <button type="button" class="avg-btn" data-year="2">평균 학점 계산</button>
+        <div class="button-row">
+          <button type="button" class="add-btn" data-year="2">학점추가</button>
+          <button type="button" class="avg-btn" data-year="2">평균학점 계산</button>
+        </div>
+        <div class="reset-row">
+          <button type="button" class="grade-reset-btn" data-year="2">리셋</button>
+        </div>
         <div class="result" id="result-2"></div>
       </div>
       <!-- 3학년 -->
       <div class="year-section" data-year="3">
         <div class="year-title">3학년</div>
         <div class="grade-list" id="grade-list-3"></div>
-        <button type="button" class="add-btn" data-year="3">학점추가</button>
-        <button type="button" class="grade-reset-btn" data-year="3">리셋</button>
-        <button type="button" class="avg-btn" data-year="3">평균 학점 계산</button>
+        <div class="button-row">
+          <button type="button" class="add-btn" data-year="3">학점추가</button>
+          <button type="button" class="avg-btn" data-year="3">평균학점 계산</button>
+        </div>
+        <div class="reset-row">
+          <button type="button" class="grade-reset-btn" data-year="3">리셋</button>
+        </div>
         <div class="result" id="result-3"></div>
       </div>
       <!-- 4학년 -->
       <div class="year-section" data-year="4">
         <div class="year-title">4학년</div>
         <div class="grade-list" id="grade-list-4"></div>
-        <button type="button" class="add-btn" data-year="4">학점추가</button>
-        <button type="button" class="grade-reset-btn" data-year="4">리셋</button>
-        <button type="button" class="avg-btn" data-year="4">평균 학점 계산</button>
+        <div class="button-row">
+          <button type="button" class="add-btn" data-year="4">학점추가</button>
+          <button type="button" class="avg-btn" data-year="4">평균학점 계산</button>
+        </div>
+        <div class="reset-row">
+          <button type="button" class="grade-reset-btn" data-year="4">리셋</button>
+        </div>
         <div class="result" id="result-4"></div>
       </div>
     </form>
   </main>
   <script>
-    // --- 유틸: localStorage 저장/불러오기
+    // localStorage 유틸
     function saveYearGrades(year, grades) {
       localStorage.setItem('grades_' + year, JSON.stringify(grades));
     }
@@ -93,10 +152,14 @@
           grades[i] = inp.value;
           saveYearGrades(year, grades);
         });
+        // 한 줄에 3개 넘지 않게 line break
+        if (i > 0 && i % 3 === 0) {
+          gradeList.appendChild(document.createElement('br'));
+        }
         gradeList.appendChild(inp);
       }
     }
-    // 학점추가
+    // 학점추가 (3개까지만 한 줄, 추가는 무제한)
     document.querySelectorAll('.add-btn').forEach(function(btn){
       btn.addEventListener('click', function(){
         const year = btn.getAttribute('data-year');
@@ -132,7 +195,6 @@
     // 입력필드에서 바로 저장
     ['1','2','3','4'].forEach(function(year){
       setGradeInputs(year);
-      // 동적 입력필드 생성 후 input 이벤트 바인딩은 setGradeInputs 내에서 처리
     });
   </script>
 </body>
