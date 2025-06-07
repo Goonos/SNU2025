@@ -1,53 +1,56 @@
-3장 <br><br>
+*반복문<br><br>
 
-- 이벤트란<br>
-&nbsp;&nbsp;웹 브라우저 내에서 사용자가 실행하는 동작<br>
-&nbsp;&nbsp;이벤트 발생 시 처리할 동작이 있어야 하며, 이를 위해 이벤트 핸들러가 필요<br><br>
+students = ['1', '2', '3', '4']<br><br>
 
-- 이벤트 연결 방법<br>
-&nbsp;&nbsp;1. HTML 태그 내 onXXX 속성 사용<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;button onclick="alert('클릭!')"&gt;Click&lt;/button&gt;<br>
-&nbsp;&nbsp;2. 자바스크립트에서 함수 연결<br>
-&nbsp;&nbsp;3. addEventListener("이벤트명", 함수, 캡처여부)<br><br>
+for(let i = 0; i < students.length; i++) {<br>
+&nbsp;&nbsp;document.write(\`\${students[i]}\`)<br>
+}<br><br>
 
-- 이벤트 버블링과 캡처링<br>
-&nbsp;&nbsp;버블링: 이벤트가 하위 요소에서 상위 요소로 전파<br>
-&nbsp;&nbsp;캡처링: 이벤트가 상위 요소에서 하위 요소로 전파<br>
-&nbsp;&nbsp;addEventListener의 세 번째 인자(true = 캡처, false = 버블)<br><br>
+for (변수 of 객체)를 사용할 경우 배열의 값을 순서대로 가져온다<br>
+for(let student of students) { document.write(\`\${student}\`); }<br><br>
 
-- 이벤트 객체<br>
-&nbsp;&nbsp;이벤트 발생 시 관련 정보가 담긴 객체 전달<br>
-&nbsp;&nbsp;예) keydown 이벤트에서 e.code, e.key 사용 가능<br><br>
+배열의 길이가 변할 땐 forEach 사용<br>
+students.forEach(function(student) {<br>
+&nbsp;&nbsp;document.write(\`\${student}\`);<br>
+})<br><br>
 
-- 이벤트 예시<br>
-&nbsp;&nbsp;document.body.addEventListener("keydown", (e) => {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;console.log(\`code: \${e.code}, key: \${e.key}\`);<br>
-&nbsp;&nbsp;});<br><br>
+함수는 화살표 함수로 변경 가능<br>
+students.forEach(student => { document.write(\`\${student}\`); })<br><br>
 
-- 기본 동작 취소<br>
-&nbsp;&nbsp;e.preventDefault()로 기본 동작 방지 가능<br><br>
+객체에서 for문을 쓸 땐 for in 사용<br><br>
 
-- 이벤트 전파 중지<br>
-&nbsp;&nbsp;e.stopPropagation()으로 이벤트 전파 중단 가능<br><br>
+for (key in subject) { document.write(\`\${key} : \${subject[key]}\`); }<br><br>
 
-7장 : 내용 추가/제거 및 방법<br><br>
+구구단<br>
+for(let i = 1; i <= 9; i++) {<br>
+&nbsp;&nbsp;for(let j = 1; j <= 9; j++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;document.write(\`\${i} X \${j} = \${i*j} <br>\`);<br>
+&nbsp;&nbsp;}<br>
+}<br><br>
 
-- DOM 요소 추가<br>
-&nbsp;&nbsp;createElement(), appendChild(), insertBefore() 등 사용<br><br>
+마무리 문제 1<br><br>
 
-- DOM 요소 제거<br>
-&nbsp;&nbsp;removeChild() 사용<br><br>
+03\quiz-1.html 문서에는 배열이 주어져 있습니다. 이 배열에서 10보다 큰 값을 찾아서 화면에 표시하세요.<br><br>
 
-- 예시<br>
-&nbsp;&nbsp;const div = document.createElement('div');<br>
-&nbsp;&nbsp;div.textContent = "새로운 내용";<br>
-&nbsp;&nbsp;document.body.appendChild(div);<br><br>
+for(let i = 0; i < 10; i++) {<br>
+&nbsp;&nbsp;if(student[i] > 10) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;document.write(\`\${student[i]}\`);<br>
+&nbsp;&nbsp;}<br>
+}<br><br>
 
-- 내용 수정<br>
-&nbsp;&nbsp;element.textContent, element.innerHTML 활용<br><br>
+numbers.forEach(num => {<br>
+&nbsp;&nbsp;if(num > 10) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;document.write(\`\${num}\`);<br>
+&nbsp;&nbsp;}<br>
+})<br><br>
 
-- 스타일 조작<br>
-&nbsp;&nbsp;element.style 속성 사용<br><br>
+마무리 문제 2<br><br>
 
-- 실습 예시<br>
-&nbsp;&nbsp;버튼 클릭 시 리스트 항목 추가/삭제 구현 가능<br>
+사용자에게 1보다 큰 수를 입력하게 한 후 입력한 숫자까지 짝수만 더하는 프로그램을 작성해 보세요.<br><br>
+
+[예시 설명]<br>
+- 사용자가 입력한 숫자가 null이 아니고 1보다 클 경우에만 실행합니다.<br>
+- 입력한 숫자까지 반복하며 현재 숫자가 홀수인지 짝수인지 구분합니다.<br>
+- 홀수는 2로 나누어 나머지가 1이면 홀수, 아니면 짝수입니다.<br>
+- 짝수일 경우에만 화면에 표시하는 명령을 건너뛰고 짝수일 경우에만 현재 값과 더한 값을 표시합니다.<br>
+`;
