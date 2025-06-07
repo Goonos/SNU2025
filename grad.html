@@ -3,40 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <title>졸업학점 계산기</title>
-  <style>
+   <style>
     body { font-family: 'Noto Sans KR', sans-serif; background: #f7f9fc; margin: 0; }
     main { max-width: 400px; margin: 3rem auto; background: white; border-radius: 12px; box-shadow: 0 2px 8px #eee; padding: 2rem; }
     label { display: block; margin: 1rem 0 0.4rem; }
     input[type=number] { width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ccc; }
     button { margin-top: 1.3rem; width: 100%; background: #004080; color: white; border: none; padding: 0.8rem; font-size: 1.05rem; border-radius: 8px; cursor: pointer;}
-    /* 홈으로 버튼은 .main-btn으로 스타일 구분 */
-    .main-btn {
-      width: auto;
-      margin-top: 0;
-      margin-bottom: 1.5rem;
-      padding: 0.6rem 1.4rem;
-      font-weight: 600;
-      font-size: 1.02rem;
-      background: #004080;
-      color: #fff;
-      border: none;
-      border-radius: 7px;
-      cursor: pointer;
-      display: inline-block;
-    }
-    /* 계산하기 버튼은 폼 내부만 따로 */
-    button[type=submit] {
-      margin-top: 1.3rem;
-      width: 100%;
-      background: #004080;
-      color: white;
-      border: none;
-      padding: 0.8rem;
-      font-size: 1.05rem;
-      border-radius: 8px;
-      cursor: pointer;
-    }
     .result { margin-top: 1.2rem; font-size: 1.1rem; color: #004080; font-weight: bold; }
+    .input-list { margin-bottom: 1.5rem;}
   </style>
 </head>
 <body>
