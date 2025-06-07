@@ -1,4 +1,4 @@
-const content = `
+
 10주차(9장)<br><br>
 - <mark style="background: #FF5582A6;">객체만들기</mark><br>
 &nbsp;&nbsp;객체는 키:값 형태를 띄고 있으며 객체는 중괄호로 구분한다<br><br>
@@ -35,18 +35,4 @@ const content = `
 &nbsp;&nbsp;class TextbookC extends BookC - 상속<br>
 &nbsp;&nbsp;super(title,price);  - BookC의 타이틀과 프라이스 가져옴<br>
 &nbsp;&nbsp;this.major = major - 자식의 메이저를 사용함<br>
-`;
-
-const container = document.createElement('div');
-container.style.whiteSpace = 'pre-wrap';  // 줄바꿈 보이도록
-container.style.fontFamily = '맑은 고딕, Arial, sans-serif';
-container.style.fontSize = '14px';
-container.style.padding = '15px';
-container.style.backgroundColor = '#fff8f8';
-container.style.border = '1px solid #FF5582';
-container.style.borderRadius = '8px';
-container.style.maxWidth = '720px';
-container.style.margin = '20px auto';
-
-container.innerHTML = content;
-document.body.appendChild(container);
+;
