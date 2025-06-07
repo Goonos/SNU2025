@@ -1,106 +1,112 @@
-// Window 객체 관련 함수
-function openPopupCenter() {
-  const screenWidth = 1000;
-  const screenHeight = 600;
-  const popupWidth = 600;
-  const popupHeight = 400;
-  const left = (screenWidth - popupWidth) / 2;
-  const top = (screenHeight - popupHeight) / 2;
-  window.open("a.html", "이벤트팝업", `width=${popupWidth} height=${popupHeight} left=${left} top=${top}`);
-}
+9주차(8장)<br><br>
 
-function closeWindow() {
-  window.close();
-}
+<mark style="background: #FF5582A6;">내장객체</mark><br>
+내장객체란 사용자가 가져다 쓸 수 있도록 미리 만들어진 객체<br>
+가장먼저 [[Window객체|Window객체]](최상위)가 만들어짐<br><br>
 
-// screen 객체 속성
-const availableWidth = screen.availWidth;
-const availableHeight = screen.availHeight;
+<mark style="background: #FF5582A6;">Window객체의 매서드</mark><br>
+1. <mark style="background: #ABF7F7A6;">window.open("경로","창이름" ,"옵션")</mark><br>
+&nbsp;&nbsp;경로 - 팝업창에 표시할 문서나 사이트의 경로:URL<br>
+&nbsp;&nbsp;창이름 - 팝업창의 이름, 미지정시 팝업창이 계속 새로 나타남<br>
+&nbsp;&nbsp;창옵션 - left, top 속성을 이용해 위치를 정하거나 width, height속성으로 크기를 지정, 미지정시 팝업은 왼쪽 상단에 나타남<br>
+&nbsp;&nbsp;ex)<br>
+&nbsp;&nbsp;function openPopup() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;window.open("a.html" , "이벤트팝업" , "width=600 height=500 left=300 top=200")}<br>
+&nbsp;&nbsp;const bttn = document.querySelector("button");<br>
+&nbsp;&nbsp;bttn.onclick = openPopup;<br>
+&nbsp;&nbsp;Q.화면너비 1000,600 이고 팝업의 크기가 600.400일때 팝업을 화면에 가운데로 하는 함수는?<br>
+&nbsp;&nbsp;A.window.open("a.html", "이벤트팝업" , "width=600 height=400 left=200 top=100")<br><br>
 
-// history 객체 메서드
-function goBack() {
-  history.back();
-}
+2. <mark style="background: #ABF7F7A6;">window.close()</mark><br>
+&nbsp;&nbsp;열려있는 브라우저 창을 닫는 함수<br>
+&nbsp;&nbsp;ex)<br>
+&nbsp;&nbsp;&lt;button onclick="window.close()">닫기&lt;/button><br><br>
 
-function goForward() {
-  history.forward();
-}
+3. screen 객체<br>
+&nbsp;&nbsp;screen.availWidth - 스크린의 가로 가동범위<br>
+&nbsp;&nbsp;screen.availHeight - 스크린의 세로 가동범위<br><br>
 
-function goStep(step) {
-  history.go(step);
-}
+4. history 객체<br>
+&nbsp;&nbsp;history.back() - 이전페이지<br>
+&nbsp;&nbsp;history.forward() - 다음페이지<br>
+&nbsp;&nbsp;history.go(1) -> 다음페이지, go(-1) -> 이전페이지<br><br>
 
-// location 객체 메서드
-function redirect(url) {
-  location.assign(url);
-}
+5. location 객체<br>
+&nbsp;&nbsp;location.assign("https://example.com"); - 링크로 접속<br>
+&nbsp;&nbsp;location.reload(); - 새로고침<br><br>
 
-function reloadPage() {
-  location.reload();
-}
+<mark style="background: #FF5582A6;">Date 객체 매서드 - 날짜관련 객체</mark><br>
+사용하려면 새로운 객체를 만든후 식별자를 붙혀 사용한다 그것을 인스턴스라 한다<br>
+let today = new Date() // 단 객체를 생성할때의 시간을 말함<br>
+console.log(today) -><br>
+today.getDate() -> 객체가 생성되었을때의 날짜(일)를 가져옴<br><br>
 
-// Date 객체 사용 예시
-const today = new Date();
+실습<br>
+1. <mark style="background: #ABF7F7A6;">두 날짜사이 흐른 시간을 계산하기</mark><br>
+&nbsp;&nbsp;const result = document.querySelector("#result");  - 결과값을 표시할 DOM 요소를 찾고 result 변수에 할당<br>
+&nbsp;&nbsp;const firstDay = new Date("2021-07-01");  - 시작 날짜를 나타내는 Date 객체를 생성하여 firstDay에 할당<br>
+&nbsp;&nbsp;const today = new Date();  - 현재 날짜·시간을 나타내는 Date 객체를 생성하여 today에 할당<br>
+&nbsp;&nbsp;let passedTime = today.getTime() - firstDay.getTime();  - 시작일로부터 현재까지 경과된 시간(밀리초) 계산하여 passedTime에 할당<br>
+&nbsp;&nbsp;let passedDay = Math.round(passedTime / (1000 * 60 * 60 * 24));  - 밀리초 단위의 passedTime을 일 단위로 환산하여 반올림 후 passedDay에 할당<br>
+&nbsp;&nbsp;result.innerText = passedDay;  - 계산된 일 수(passedDay)를 result 요소의 텍스트로 설정<br><br>
 
-function getDaysPassed(startDateStr) {
-  const firstDay = new Date(startDateStr);
-  const now = new Date();
-  const passedTime = now.getTime() - firstDay.getTime();
-  const passedDays = Math.round(passedTime / (1000 * 60 * 60 * 24));
-  return passedDays;
-}
+2. <mark style="background: #ABF7F7A6;">디지털 시계 만들기</mark><br>
+&nbsp;&nbsp;const displayDate = document.querySelector('#today');  - '#today' 요소를 찾아 displayDate 변수에 할당<br>
+&nbsp;&nbsp;const year = today.getFullYear();  - today에서 연도를 가져와 year에 할당<br>
+&nbsp;&nbsp;const month = today.getMonth() + 1;  - today에서 월(0~11)을 가져와 +1하여 month에 할당<br>
+&nbsp;&nbsp;const date = today.getDate();  - today에서 날짜를 가져와 date에 할당<br>
+&nbsp;&nbsp;const day1 = today.getDay();  - today에서 요일(0~6)을 가져와 day1에 할당<br>
+&nbsp;&nbsp;let day2 = '';  - 요일명 저장용 빈 문자열을 day2에 할당<br>
+&nbsp;&nbsp;switch(day1) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;case 0: day2 = '일요일'; break;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;case 1: day2 = '월요일'; break;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;case 2: day2 = '화요일'; break;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;case 3: day2 = '수요일'; break;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;case 4: day2 = '목요일'; break;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;case 5: day2 = '금요일'; break;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;case 6: day2 = '토요일'; break;<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;displayDate.innerHTML = \`\${year}년 \${month}월 \${date}일 <span style='font-weight:bold'>\${day2}</span>\`;<br>
+&nbsp;&nbsp;const displayTime = document.querySelector("#clock");<br>
+&nbsp;&nbsp;let clock = () => {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;let current = new Date();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;let hrs = current.getHours();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;let mins = current.getMinutes();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;let secs = current.getSeconds();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;let period = "AM";<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (hrs === 0) { hrs = 12; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else if (hrs > 12) { hrs = hrs - 12; period = "PM"; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;hrs = (hrs < 10) ? "0" + hrs : hrs;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mins = (mins < 10) ? "0" + mins : mins;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;secs = (secs < 10) ? "0" + secs : secs;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;displayTime.innerText = \`\${period} \${hrs}:\${mins}:\${secs}\`;<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;setInterval(clock, 1000);<br><br>
 
-function displayCurrentDate() {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = now.getMonth() + 1;
-  const date = now.getDate();
-  const dayIndex = now.getDay();
-  const days = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
-  const dayName = days[dayIndex];
-  return `${year}년 ${month}월 ${date}일 ${dayName}`;
-}
+<mark style="background: #FF5582A6;">Math 객체</mark><br>
+Math.abs(x) - 절댓값<br>
+Math.cbrt(x) - 세제곱근<br>
+Math.ceil(x) - 올림<br>
+Math.floor(x) - 내림<br>
+Math.round(x) - 반올림<br>
+Math.random(x) - 0과 1사이 무작위 난수<br>
+(Number객체의 소숫점 표현)<br>
+숫자.toFixed(자릿수)<br><br>
 
-function startDigitalClock(element) {
-  function clock() {
-    const now = new Date();
-    let hrs = now.getHours();
-    let mins = now.getMinutes();
-    let secs = now.getSeconds();
-    let period = "AM";
+실습<br>
+- <mark style="background: #ABF7F7A6;">반지름 10 원둘레 넓이 구하기</mark><br>
+radius = 10<br>
+2 * Math.PI(3.14) * radius - 원 둘레 = 2파이R<br>
+Math.PI * radius * radius - 원 넓이 = 파이 R 제곱<br><br>
 
-    if (hrs === 0) {
-      hrs = 12;
-    } else if (hrs > 12) {
-      hrs -= 12;
-      period = "PM";
-    }
+- <mark style="background: #ABF7F7A6;">1~100사이 랜덤 구하기</mark><br>
+Math.floor(Math.random() *100 +1)<br><br>
 
-    hrs = hrs < 10 ? "0" + hrs : hrs;
-    mins = mins < 10 ? "0" + mins : mins;
-    secs = secs < 10 ? "0" + secs : secs;
-
-    element.innerText = `${period} ${hrs}:${mins}:${secs}`;
-  }
-  clock();
-  setInterval(clock, 1000);
-}
-
-// Math 객체 사용 예시
-function calculateCircle(radius) {
-  const circumference = 2 * Math.PI * radius;
-  const area = Math.PI * radius * radius;
-  return { circumference, area };
-}
-
-function randomBetween(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function changeBackgroundImage() {
-  const bgCount = 5;
-  const randomNumber = Math.floor(Math.random() * bgCount) + 1;
-  document.body.style.backgroundImage = `url(images/bg-${randomNumber}.jpg)`;
-}
-
-document.addEventListener("load", changeBackgroundImage());
+- <mark style="background: #ABF7F7A6;">1-5의 랜덤 이미지 가져오기</mark><br>
+function changeBg() {  – changeBg라는 함수를 선언해 배경 변경 로직을 묶음<br>
+&nbsp;&nbsp;const bgCount = 5;  – 사용할 배경 이미지 개수(5개)를 상수로 정의<br>
+&nbsp;&nbsp;let randomNumber = Math.floor(Math.random() * bgCount) + 1;  – 1~5 범위 정수를 랜덤 생성<br>
+&nbsp;&nbsp;document.body.style.backgroundImage = \`url(images/bg-\${randomNumber}.jpg)\`;  – 랜덤 이미지로 &lt;body&gt; 배경 설정<br>
+}  – changeBg 함수 정의 끝<br>
+document.addEventListener("load", changeBg());  – 페이지 로드 시 changeBg() 실행 등록<br>
+`;
