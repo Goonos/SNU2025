@@ -42,7 +42,7 @@
       box-shadow: 0 4px 16px rgba(0,0,0,0.07);
       padding: 2rem;
       position: relative;
-      min-height: 420px;
+      min-height: 480px; /* 조금 늘림 */
     }
     .school-link-box {
       position: absolute;
@@ -88,7 +88,6 @@
       background: #b3b3b3;
       cursor: default;
     }
-
     .right-widget-box {
       position: absolute;
       right: -360px;
@@ -215,6 +214,43 @@
       border-radius: 6px;
       padding: 2px 6px;
     }
+
+    /* --- 랜덤 조언 API 영역 스타일 --- */
+    #adviceSection {
+      margin-top: 3rem;
+      text-align: center;
+      background: #eef3fa;
+      border-radius: 12px;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 2px 8px #d1e2ff44;
+      color: #004080;
+      font-size: 1.1rem;
+      font-weight: 600;
+      max-width: 460px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #adviceBox {
+      min-height: 60px;
+      margin-bottom: 1rem;
+      color: #103c72;
+      font-style: italic;
+      font-weight: 500;
+    }
+    #refreshAdviceBtn {
+      background: #004080;
+      color: white;
+      border: none;
+      padding: 0.55rem 1.3rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
+    #refreshAdviceBtn:hover {
+      background: #002f5b;
+    }
   </style>
 </head>
 <body>
@@ -262,8 +298,17 @@
         과목별 학점 입력, 총 평균 학점 자동 계산
       </li>
     </ul>
+
+    <!-- 랜덤 조언 API 영역 -->
+    <section id="adviceSection" aria-label="랜덤 조언">
+      <h3>오늘의 랜덤 조언</h3>
+      <div id="adviceBox">로딩 중...</div>
+      <button id="refreshAdviceBtn" type="button">새 조언 받기</button>
+    </section>
+
   </main>
   <script>
+    // 기존 학교 홈페이지 바로가기 기능
     const urlInput = document.getElementById('schoolUrl');
     const goBtn = document.getElementById('goSchoolBtn');
     function checkInput() {
@@ -283,7 +328,7 @@
       }
     });
 
-    // ----- 오른쪽: 캘린더 위젯
+    // 캘린더 렌더링 함수 및 초기화 (기존)
     function renderCalendar(elem, date) {
       const year = date.getFullYear();
       const month = date.getMonth();
@@ -323,20 +368,42 @@
     }
     renderCalendar(document.getElementById('calendar'), new Date());
 
-    // ----- 메모 저장/복원
+    // 메모 저장 및 복원 (기존)
     const memoKey = "mainpage_memo";
     const memoText = document.getElementById('memoText');
     const memoSaveBtn = document.getElementById('memoSaveBtn');
-    // 복원
     if(localStorage.getItem(memoKey)){
       memoText.value = localStorage.getItem(memoKey);
     }
-    // 저장
     memoSaveBtn.onclick = function() {
       localStorage.setItem(memoKey, memoText.value);
       memoSaveBtn.textContent = "저장됨!";
       setTimeout(()=>{memoSaveBtn.textContent="메모 저장";}, 1200);
     };
+
+    // --- 랜덤 조언 API 관련 스크립트 ---
+    const adviceBox = document.getElementById('adviceBox');
+    const refreshBtn = document.getElementById('refreshAdviceBtn');
+
+    function fetchAdvice() {
+      adviceBox.textContent = '로딩 중...';
+      fetch('https://api.adviceslip.com/advice')
+        .then(res => res.json())
+        .then(data => {
+          adviceBox.textContent = `"${data.slip.advice}"`;
+        })
+        .catch(err => {
+          adviceBox.textContent = '조언을 불러오는 데 실패했습니다.';
+          console.error(err);
+        });
+    }
+
+    // 페이지 로드 시 초기 호출
+    fetchAdvice();
+
+    // 버튼 클릭 시 새 조언 요청
+    refreshBtn.addEventListener('click', fetchAdvice);
+
   </script>
 </body>
 </html>
