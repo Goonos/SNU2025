@@ -6,6 +6,13 @@
   <style>
     body { font-family: 'Noto Sans KR', sans-serif; background: #f7f9fc; margin: 0; }
     main { max-width: 400px; margin: 3rem auto; background: white; border-radius: 12px; box-shadow: 0 2px 8px #eee; padding: 2rem; }
+    h2 { text-align: center; }   /* 추가 */
+    .center-img {
+      display: block;
+      margin: 0 auto 1.3rem auto;
+      max-width: 120px; /* 크기 조절 */
+      height: auto;
+    }
     label { display: block; margin: 1rem 0 0.4rem; }
     input[type=number] { width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ccc; }
     button { margin-top: 1.3rem; width: 100%; background: #004080; color: white; border: none; padding: 0.8rem; font-size: 1.05rem; border-radius: 8px; cursor: pointer;}
@@ -15,6 +22,7 @@
 <body>
   <main>
     <button class="main-btn" onclick="location.href='https://goonos.github.io/SNU2025/web2025/index.html'">홈으로</button>
+    <img src="img.png" alt="성적 계산기 이미지" class="center-img">
     <h2>성적 계산기</h2>
     <form id="rankForm">
       <label>평균 점수</label>
@@ -33,7 +41,6 @@
     function normalCdf(x, mean, std) {
       return 0.5 * (1 + erf((x - mean) / (std * Math.sqrt(2))));
     }
-    // 에러 함수(수치근사)
     function erf(x) {
       var a1 =  0.254829592;
       var a2 = -0.284496736;
@@ -43,10 +50,8 @@
       var p  =  0.3275911;
       var sign = (x >= 0) ? 1 : -1;
       x = Math.abs(x);
-
       var t = 1.0/(1.0 + p*x);
       var y = 1.0 - (((((a5*t + a4)*t) + a3)*t + a2)*t + a1)*t*Math.exp(-x*x);
-
       return sign*y;
     }
     document.getElementById('rankForm').addEventListener('submit', function(e) {
