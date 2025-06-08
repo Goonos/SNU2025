@@ -1,53 +1,87 @@
-10장: 문자열 다루기
+9장<br><br>
+- <mark style="background: #FF5582A6;">객체 만들기</mark><br>
+&nbsp;&nbsp;객체는 키:값 쌍 형태로 중괄호{}로 감싼다.<br><br>
 
-- 문자열 길이 확인  
-  let str = "Hello";  
-  str.length // 5  
+- <mark style="background: #FF5582A6;">생성자 함수</mark><br>
+&nbsp;&nbsp;함수 내 this를 사용해 객체 속성 초기화.<br><br>
 
-- 문자 추출  
-  str.charAt(3) // 3번째 문자  
-  str[3] // 배열처럼 접근 가능  
+- <mark style="background: #FF5582A6;">객체 키와 값 조회</mark><br>
+&nbsp;&nbsp;for (변수 in 객체)로 키 순회 가능.<br>
+&nbsp;&nbsp;Object.keys(객체) → 키 배열 반환<br>
+&nbsp;&nbsp;Object.values(객체) → 값 배열 반환<br>
+&nbsp;&nbsp;Object.entries(객체) → [키, 값] 배열 반환<br><br>
 
-- 특정 문자 개수 세기  
-  function counting(str, ch) {  
-    let count = 0;  
-    for(let i = 0; i < str.length; i++) {  
-      if(str[i] === ch) count++;  
-    }  
-    return count;  
-  }  
+- <mark style="background: #FF5582A6;">프로토타입과 상속</mark><br>
+&nbsp;&nbsp;생성자 함수 선언 시 프로토타입 자동 생성.<br>
+&nbsp;&nbsp;공유 속성과 메서드를 프로토타입에 저장.<br>
+&nbsp;&nbsp;프로토타입 상속 통해 자바스크립트 상속 구현.<br><br>
 
-- 문자열 검색  
-  • indexOf("문자열"): 첫 등장 위치 반환, 없으면 -1  
-  • lastIndexOf("문자열"): 마지막 등장 위치 반환  
-  • includes("문자열"): 포함 여부 true/false 반환  
-  • startsWith("문자열"), endsWith("문자열"): 시작/끝 문자 확인  
+- 프로토타입 상속 예시<br>
+<code>function Textbook(title, price, major) {</code><br>
+&nbsp;&nbsp;Book.call(this, title, price); // 부모 생성자 호출<br>
+&nbsp;&nbsp;this.major = major;<br>
+}<br>
+Textbook.prototype.buyTextbook = function() {<br>
+&nbsp;&nbsp;console.log(\`\${this.major} 전공 서적, \${this.title}을 구매했습니다.\`);<br>
+};<br>
+Object.setPrototypeOf(Textbook.prototype, Book.prototype); // 상속 연결<br><br>
 
-- 문자열 자르기  
-  • substring(start, end)  
-  • slice(start, end) — 음수 인덱스 가능  
-  예)  
-  str.substring(5) // 5번째부터 끝까지  
-  str.slice(-5) // 뒤에서 5글자부터 끝까지  
+- <mark style="background: #FF5582A6;">클래스 상속</mark><br>
+&nbsp;&nbsp;class TextbookC extends BookC {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;constructor(title, price, major) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super(title, price); // 부모 생성자 호출<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.major = major;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br><br>
 
-- 문자열 분할(split)  
-  str.split("구분자") → 배열 반환  
-  예) "Hello world".split(" ") → ["Hello", "world"]  
+10장: 문자열 다루기<br><br>
 
-- 문자열 공백 제거  
-  str.trim(), trimStart(), trimEnd()  
+- 문자열 길이 확인<br>
+&nbsp;&nbsp;let str = "Hello";<br>
+&nbsp;&nbsp;str.length // 5<br><br>
 
-- 대소문자 변환  
-  str.toUpperCase(), str.toLowerCase()  
+- 문자 추출<br>
+&nbsp;&nbsp;str.charAt(3) // 3번째 문자<br>
+&nbsp;&nbsp;str[3] // 배열처럼 접근 가능<br><br>
 
-- 이메일 처리 예시  
-  • 이메일을 @ 기준으로 분리하여 사용자명과 도메인 추출  
-  • 사용자명 일부만 보여주고 도메인은 그대로 표시하는 간단한 처리  
-  • split(), substring() 사용  
+- 특정 문자 개수 세기<br>
+&nbsp;&nbsp;function counting(str, ch) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;let count = 0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for(let i = 0; i < str.length; i++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(str[i] === ch) count++;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return count;<br>
+&nbsp;&nbsp;}<br><br>
 
-- 예)  
-  let email = "username@example.com";  
-  let parts = email.split("@");  
-  let user = parts[0].substring(0, 3);  
-  let domain = parts[1];  
-  console.log(\`\${user}...@\${domain}\`);  
+- 문자열 검색<br>
+&nbsp;&nbsp;indexOf("문자열"): 첫 등장 위치, 없으면 -1<br>
+&nbsp;&nbsp;lastIndexOf("문자열"): 마지막 등장 위치<br>
+&nbsp;&nbsp;includes("문자열"): 포함 여부<br>
+&nbsp;&nbsp;startsWith("문자열"), endsWith("문자열"): 시작/끝 검사<br><br>
+
+- 문자열 자르기<br>
+&nbsp;&nbsp;substring(start, end)<br>
+&nbsp;&nbsp;slice(start, end) — 음수 인덱스 가능<br>
+&nbsp;&nbsp;예) str.substring(5), str.slice(-5)<br><br>
+
+- 문자열 분할<br>
+&nbsp;&nbsp;str.split("구분자") → 배열 반환<br>
+&nbsp;&nbsp;예) "Hello world".split(" ") → ["Hello", "world"]<br><br>
+
+- 공백 제거<br>
+&nbsp;&nbsp;str.trim(), trimStart(), trimEnd()<br><br>
+
+- 대소문자 변환<br>
+&nbsp;&nbsp;str.toUpperCase(), str.toLowerCase()<br><br>
+
+- 이메일 처리 예시<br>
+&nbsp;&nbsp;• @ 기준으로 분리 후 사용자명과 도메인 추출<br>
+&nbsp;&nbsp;• 사용자명 일부만 보여주고 도메인은 그대로 표시<br>
+&nbsp;&nbsp;• split(), substring() 사용<br><br>
+
+- 예)<br>
+&nbsp;&nbsp;let email = "username@example.com";<br>
+&nbsp;&nbsp;let parts = email.split("@");<br>
+&nbsp;&nbsp;let user = parts[0].substring(0, 3);<br>
+&nbsp;&nbsp;let domain = parts[1];<br>
+&nbsp;&nbsp;console.log(\`\${user}...@\${domain}\`);<br>
