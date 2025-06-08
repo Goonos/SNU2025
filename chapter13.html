@@ -1,58 +1,58 @@
-13장: 비동기 처리와 Promise
+13장: 비동기 처리와 Promise<br><br>
 
-- 동기 vs 비동기  
-  • 동기(synchronous): 순차적으로 실행, 이전 작업 끝나야 다음 실행  
-  • 비동기(asynchronous): 작업 요청 후 바로 다음 코드 실행, 작업 완료시 알림 받음  
+- 동기 vs 비동기<br>
+&nbsp;&nbsp;• 동기(synchronous): 순차적으로 실행, 이전 작업 끝나야 다음 실행<br>
+&nbsp;&nbsp;• 비동기(asynchronous): 작업 요청 후 바로 다음 코드 실행, 작업 완료 시 알림 받음<br><br>
 
-- 콜백 함수(callback)  
-  • 비동기 처리에 사용되는 함수  
-  • 작업 완료 후 호출되어 결과 처리  
+- 콜백 함수(callback)<br>
+&nbsp;&nbsp;• 비동기 처리에 사용되는 함수<br>
+&nbsp;&nbsp;• 작업 완료 후 호출되어 결과 처리<br><br>
 
-- setTimeout 예제  
-  setTimeout(() => console.log("B"), 2000); // 2초 후 실행  
+- setTimeout 예제<br>
+&nbsp;&nbsp;setTimeout(() => console.log("B"), 2000); // 2초 후 실행<br><br>
 
-- 콜백 지옥 문제  
-  • 중첩 콜백이 많아지면 코드 가독성 저하, 유지보수 어려움  
+- 콜백 지옥 문제<br>
+&nbsp;&nbsp;• 중첩 콜백이 많아지면 코드 가독성 저하, 유지보수 어려움<br><br>
 
-- Promise  
-  • 비동기 처리 상태와 결과를 표현하는 객체  
-  • 상태: Pending(대기), Fulfilled(이행), Rejected(거부)  
-  • 생성자: new Promise((resolve, reject) => {...})  
-  • resolve(): 성공 처리, reject(): 실패 처리  
+- Promise<br>
+&nbsp;&nbsp;• 비동기 처리 상태와 결과를 표현하는 객체<br>
+&nbsp;&nbsp;• 상태: Pending(대기), Fulfilled(이행), Rejected(거부)<br>
+&nbsp;&nbsp;• 생성자: new Promise((resolve, reject) => {...})<br>
+&nbsp;&nbsp;• resolve(): 성공 처리, reject(): 실패 처리<br><br>
 
-- Promise 사용 예  
-  const pizza = new Promise((resolve, reject) => {  
-    if(likePizza) resolve("피자 주문 성공");  
-    else reject("피자 주문 실패");  
-  });  
+- Promise 사용 예<br>
+<code>const pizza = new Promise((resolve, reject) => {<br>
+&nbsp;&nbsp;if(likePizza) resolve("피자 주문 성공");<br>
+&nbsp;&nbsp;else reject("피자 주문 실패");<br>
+});</code><br><br>
 
-- then(), catch(), finally()  
-  • then(): 성공 시 실행할 함수 등록  
-  • catch(): 실패 시 실행할 함수 등록  
-  • finally(): 성공 실패 관계없이 항상 실행  
+- then(), catch(), finally()<br>
+&nbsp;&nbsp;• then(): 성공 시 실행할 함수 등록<br>
+&nbsp;&nbsp;• catch(): 실패 시 실행할 함수 등록<br>
+&nbsp;&nbsp;• finally(): 성공 실패 관계없이 항상 실행<br><br>
 
-- Promise 체이닝  
-  pizza.then(result => console.log(result))  
-       .catch(err => console.error(err))  
-       .finally(() => console.log("작업 완료"));  
+- Promise 체이닝<br>
+<code>pizza.then(result => console.log(result))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;.catch(err => console.error(err))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;.finally(() => console.log("작업 완료"));</code><br><br>
 
-- async/await (ES2017)  
-  • Promise를 더 간결하게 작성할 수 있는 문법  
-  • await는 Promise가 처리될 때까지 기다림  
-  • 함수 앞에 async 키워드 붙여야 함  
+- async/await (ES2017)<br>
+&nbsp;&nbsp;• Promise를 더 간결하게 작성할 수 있는 문법<br>
+&nbsp;&nbsp;• await는 Promise가 처리될 때까지 기다림<br>
+&nbsp;&nbsp;• 함수 앞에 async 키워드 붙여야 함<br><br>
 
-- async/await 예제  
-  async function orderPizza() {  
-    try {  
-      const result = await pizzaOrder();  
-      console.log(result);  
-    } catch(err) {  
-      console.error(err);  
-    } finally {  
-      console.log("주문 완료");  
-    }  
-  }  
+- async/await 예제<br>
+<code>async function orderPizza() {<br>
+&nbsp;&nbsp;try {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;const result = await pizzaOrder();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;console.log(result);<br>
+&nbsp;&nbsp;} catch(err) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;console.error(err);<br>
+&nbsp;&nbsp;} finally {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;console.log("주문 완료");<br>
+&nbsp;&nbsp;}<br>
+}</code><br><br>
 
-- Promise와 비동기 흐름 제어  
-  • 복잡한 비동기 작업을 순서대로 처리할 때 유용  
-  • 코드 가독성, 에러 처리 개선  
+- Promise와 비동기 흐름 제어<br>
+&nbsp;&nbsp;• 복잡한 비동기 작업을 순서대로 처리할 때 유용<br>
+&nbsp;&nbsp;• 코드 가독성, 에러 처리 개선
